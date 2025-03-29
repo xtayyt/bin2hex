@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bin2hex"
+dynamic = ["version"]
+requires-python = ">= 3.8"
+authors = [
+    {name = "Yitao Zhang", email = "xtayyt@gmail.com"},
+]
+description = "bin2hex is an utility to convert binary file to multiple types of hexadecimal text file"
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICEN[CS]E*"]
+keywords = [
+    "bin2hex",
+    "binary",
+    "bin",
+    "hexadecimal",
+    "hex",
+    "denali",
+    "verilog",
+    "convert",
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+    "Topic :: Software Development :: Embedded Systems",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/xtayyt/bin2hex"
+Repository = "https://github.com/xtayyt/bin2hex.git"
+Issues = "https://github.com/xtayyt/bin2hex/issues"
+Changelog = "https://github.com/xtayyt/bin2hex/blob/master/CHANGELOG.md"
+
+[project.scripts]
+bin2hex = "bin2hex.main:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "bin2hex.__version__"}
