@@ -9,20 +9,24 @@ requires-python = ">= 3.8"
 authors = [
     {name = "Yitao Zhang", email = "xtayyt@gmail.com"},
 ]
+
 description = "bin2hex is an utility to convert binary file to multiple types of hexadecimal text file"
 readme = "README.md"
 license = "BSD-3-Clause"
 license-files = ["LICEN[CS]E*"]
 keywords = [
     "bin2hex",
+    "bin2vhx",
     "binary",
     "bin",
     "hexadecimal",
     "hex",
+    "vhx",
     "denali",
     "verilog",
     "convert",
 ]
+
 classifiers = [
     "Programming Language :: Python",
     "Operating System :: OS Independent",

@@ -1,11 +1,9 @@
-# 
+#
 # Copyright 2025 Yitao Zhang
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
-
-from typing import Optional, BinaryIO
 
 def bin_to_denali(input_data:bytes) -> str:
     output_data = ""

@@ -1,13 +1,11 @@
-# 
+#
 # Copyright 2025 Yitao Zhang
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-from typing import Optional, BinaryIO
-
-def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, swap_endian:int = False) -> str:
+def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF, swap_endian:int = False) -> str:
     output_data = ""
     count = 0
 
@@ -19,13 +17,23 @@ def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, swap_endian:int = F
             if len(data) < data_width:
                 print(f"Warning: The input data is not aligned to the data width {data_width}. Padding zeros.")
                 data +=b'\x00' * (data_width - len(data))
+
+            if ecc_encode is not None:
+                data = ecc_encode(data, data_width)
+
+            # Pad the data if required
+            if pad_count > 0:
+               data += bytes([pad_byte] * pad_count)
+
             # Convert the binary data to hex string sequence
             hex_seq = data.hex().upper()
+
             # Handle the endian sequence
             if swap_endian:
                 hex_str = hex_seq
             else:
                 hex_str = ''.join([hex_seq[i-1:i] + hex_seq[i:i+1] for i in range(len(hex_seq) - 1, -1, -2)])
+
             # Append the hex string
             output_data += hex_str
             count += data_width
@@ -37,20 +45,20 @@ def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, swap_endian:int = F
 
     return output_data
 
-def bin_to_verilog_dw1(input_data:bytes) -> str:
-    return bin_to_verilog_dwn(input_data, 1, False)
+def bin_to_verilog_dw1(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_verilog_dwn(input_data, 1, ecc_encode, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw2(input_data:bytes) -> str:
-    return bin_to_verilog_dwn(input_data, 2)
+def bin_to_verilog_dw2(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_verilog_dwn(input_data, 2, ecc_encode, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw4(input_data:bytes) -> str:
-    return bin_to_verilog_dwn(input_data, 4)
+def bin_to_verilog_dw4(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_verilog_dwn(input_data, 4, ecc_encode, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw8(input_data:bytes) -> str:
-    return bin_to_verilog_dwn(input_data, 8)
+def bin_to_verilog_dw8(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_verilog_dwn(input_data, 8, ecc_encode, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw16(input_data:bytes) -> str:
-    return bin_to_verilog_dwn(input_data, 16)
+def bin_to_verilog_dw16(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_verilog_dwn(input_data, 16, ecc_encode, pad_count, pad_byte, False)
 
 def bin_to_verilog_addr_dwn(input_data:bytes , start_address:int = 0x0, align_width:int = 4, data_width:int = 1, swap_endian:bool = False) -> str:
     output_data = ""
@@ -118,7 +126,9 @@ bin2verilog_dict = {
         "function": bin_to_verilog_dw1,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 1-byte(8-bit) width",
-            "No option is accepted",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  00",
             "  01",
@@ -129,7 +139,9 @@ bin2verilog_dict = {
         "function": bin_to_verilog_dw2,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 2-byte(16-bit) width",
-            "No option is accepted",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  0100",
             "  0302",
@@ -140,7 +152,9 @@ bin2verilog_dict = {
         "function": bin_to_verilog_dw4,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 4-byte(32-bit) width",
-            "No option is accepted",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  03020100",
             "  07060504",
@@ -151,7 +165,9 @@ bin2verilog_dict = {
         "function": bin_to_verilog_dw8,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 8-byte(64-bit) width",
-            "No option is accepted",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  0706050403020100",
             "  0F0E0D0C0B0A0908",
@@ -162,7 +178,9 @@ bin2verilog_dict = {
         "function": bin_to_verilog_dw16,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 16-byte(128-bit) width",
-            "No option is accepted",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  0F0E0D0C0B0A09080706050403020100",
             "  1F1E1D1C1B1A19181716151413121110",

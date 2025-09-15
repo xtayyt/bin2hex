@@ -1,11 +1,9 @@
-# 
+#
 # Copyright 2025 Yitao Zhang
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
-
-from typing import Optional, BinaryIO
 
 def bin_to_c_uintx(input_data:bytes, align_width:int = 16, data_width:int = 1, swap_endian:bool = False) -> str:
     output_data = ""

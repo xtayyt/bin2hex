@@ -172,3 +172,25 @@ options:
 @0x00000020 2F2E2D2C2B2A29282726252423222120 3F3E3D3C3B3A39383736353433323130
 ......
 ```
+
+## Supported text file types
+1. None:
+- No ECC is added
+
+2. ARM SECDED:
+- Single Error Correction Double Error Detection (SECDED) code
+- The ECC bits are appended to the MSB side of the data
+- Only verilog_dwx (x = 4, 8, 16) formats support this ECC
+
+3. User specific algorithm
+- Custom ECC function defined in the specified Python file
+- The Python file should define a function named ecc_encode
+```
+def ecc_encode(data: bytes, data_width: int) -> bytes
+    # Add user specific algorithm here
+    return data + ecc_bytes
+```
+- data is the input data in bytes
+- data_width is the data width in bytes
+- The function should return the data with ECC bits appended to the MSB side in bytes
+- Only verilog_dwx (x = 1, 2, 4, 8, 16) formats support this ECC
