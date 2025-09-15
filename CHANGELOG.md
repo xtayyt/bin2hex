@@ -1,14 +1,9 @@
 # ChangeLog
-
-## V1.0.0 - 2025-03-30
+## V2.1.0 - 2025-09-15
 =======================
+### Bug fix
+- Fix limitation of User specific ECC algorithm location
 
-### Feature
-- Initial release
-- Add support for the following HEX formats:
-  - C (uint8, uint16, uint32 and uint64)
-  - Verilog HDL (8-bit, 16-bit, 32-bit, 64-bit and 128-bit data width with/without address)
-  - Cadence Denali model
 
 ## V2.0.0 - 2025-09-15
 =======================
@@ -30,3 +25,14 @@
 ### Bug fix
 - Fix error when no option is specified
   - Help text shall be printed
+
+
+## V1.0.0 - 2025-03-30
+=======================
+
+### Feature
+- Initial release
+- Add support for the following HEX formats:
+  - C (uint8, uint16, uint32 and uint64)
+  - Verilog HDL (8-bit, 16-bit, 32-bit, 64-bit and 128-bit data width with/without address)
+  - Cadence Denali model

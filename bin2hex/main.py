@@ -10,7 +10,7 @@
 import os
 import argparse
 import inspect
-import importlib
+import importlib.util
 
 from typing import Optional, BinaryIO
 from bin2hex import __version__
@@ -129,10 +129,11 @@ def main() -> bool:
                 kwargs["ecc_encode"] = ecc_dict[ecc]["function"]
             else:
                 if (os.path.isfile(ecc)):
-                    module_name = ecc.replace('.py', '')
-                    module = importlib.import_module(module_name)
-                    if hasattr(module, 'ecc_encode'):
-                        kwargs["ecc_encode"] = getattr(module, 'ecc_encode')
+                    ecc_spec = importlib.util.spec_from_file_location("python2_module", ecc)
+                    ecc_module = importlib.util.module_from_spec(ecc_spec)
+                    ecc_spec.loader.exec_module(ecc_module)
+                    if hasattr(ecc_module, 'ecc_encode'):
+                        kwargs["ecc_encode"] = getattr(ecc_module, 'ecc_encode')
                     else:
                         print(f"Warning: Doesn't find ecc_encode function in {ecc}. Using default \"none\".")
                         kwargs["ecc_encode"] = None
