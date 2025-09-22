@@ -1,4 +1,15 @@
 # ChangeLog
+
+## V2.2.0 - 2025-09-18
+=======================
+### Feature
+- Add support to generate split files
+  - Some memory might be constructed by multiple of banks
+  - This feature is useful to generate files in this scenario
+### Bug fix
+- Fix issue when calling safe_open
+
+
 ## V2.1.0 - 2025-09-15
 =======================
 ### Bug fix

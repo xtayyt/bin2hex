@@ -53,8 +53,10 @@ address_help = f"[Optional] The start address of the image. Not all formats requ
 alignment_help = f"[Optional] The byte count per line. Default is various according to the format"
 ecc_help = f"[Optional] The ECC type to be calculated. Not all formats require. Default is \"none\""
 padcount_help = f"[Optional] The byte count to be padded to hex lines. Default is 0." + \
-           f"It is useful to generate the hex file which's memory width is larger than data width, such as FLASH memory with ECC"
+                f"It is useful to generate the hex file which's memory width is larger than data width, such as FLASH memory with ECC"
 padbyte_help = f"[Optional] The padding byte. Due to the typical use case of FLASH memory, default is \"0xFF\""
+split_help = f"[Optional] Split the output into multiple files with suffix \"_0\", \"_1\", ... according to the split byte count" + \
+             f"Must be power of 2. Default is 1(no split)"
 # The entry address is reserved for future use, such as iHex and SRecord
 #entry_help = f"[Optional] The start entry address of the executable binary. Default is \"No entry\""
 
@@ -89,6 +91,7 @@ def main() -> bool:
     parse.add_argument('-e', '--ecc', default = None, help = ecc_help)
     parse.add_argument('-c', '--padcount', type = lambda x:int(x, 0), default = None, help = padcount_help)
     parse.add_argument('-b', '--padbyte', type = lambda x:int(x, 0), default = None, help = padbyte_help)
+    parse.add_argument('-s', '--split', type = lambda x:int(x, 0), default = None, help = split_help)
     #parse.add_argument('-E', '--entry', type = lambda x:int(x, 0), default = None, help=entry_help)
     args = parse.parse_args()
 
@@ -100,10 +103,24 @@ def main() -> bool:
     ecc = args.ecc
     pad_count = args.padcount
     pad_byte = args.padbyte
+    split_count = args.split
     #start_entry = args.entry
 
-    ifile = safe_open(input_file, 'rb') if args.input is not None else None
-    ofile = safe_open(output_file, 'w') if args.output is not None else None
+    if split_count is not None:
+        if split_count <= 0 or (split_count & (split_count - 1)) != 0:
+            print(f"Warning: The split count {split_count} is not valid. It must be a power of 2 (1, 2, 4, 8, ...). The option will be ignored.")
+    else:
+        split_count = 1
+
+    ifile = safe_open(input_file, 'rb')
+
+    ofiles = []
+    if split_count == 1:
+        ofiles.append(safe_open(output_file, 'w'))
+    else:
+        for i in range(split_count):
+            name, extension = output_file.rsplit('.', 1)
+            ofiles.append(safe_open(f"{name}_{i}.{extension}", 'w'))
 
     # Check the format is supported
     if convert_format not in format_dict:
@@ -148,12 +165,16 @@ def main() -> bool:
         else:
             print(f"Warning: The format {convert_format} does not support \"padcount\" option, which will be ignored.")
     if pad_byte is not None:
-        if "pad_byte" in inspect.signature(convert_function).parameters:
-            if pad_byte < 0 or pad_byte > 255:
-                print(f"Warning: The pad byte {pad_byte} is out of range (0-255). Pad byte will be masked to 0-255.")
-            kwargs["pad_byte"] = pad_byte & 0xFF
+        if pad_count is not None:
+            if "pad_byte" in inspect.signature(convert_function).parameters:
+                if pad_byte < 0 or pad_byte > 255:
+                    print(f"Warning: The pad byte {pad_byte} is out of range (0-255). Pad byte will be masked to 0-255.")
+                kwargs["pad_byte"] = pad_byte & 0xFF
+            else:
+                print(f"Warning: The format {convert_format} does not support \"padbyte\" option, which will be ignored.")
         else:
-            print(f"Warning: The format {convert_format} does not support \"padbyte\" option, which will be ignored.")
+            print(f"Warning: The pad byte is specified but pad count is not specified. The pad byte option will be ignored.")
+
     #if start_entry is not None:
     #    if "start_entry" in inspect.signature(convert_function).parameters:
     #        kwargs["start_entry"] = start_entry
@@ -166,8 +187,13 @@ def main() -> bool:
     # Perform the conversion
     output_data = convert_function(input_data, **kwargs)
 
+
     # Write the hex string to the output file
-    ofile.write(output_data)
+    output_data_lines = output_data.splitlines(keepends=True)
+    i = 0
+    for output_data_line in output_data_lines:
+        ofiles[i % split_count].write(output_data_line)
+        i = i + 1
 
     return
 
