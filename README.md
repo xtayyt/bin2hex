@@ -7,18 +7,31 @@ bin2hex is an utility to convert binary file to multiple types of hexadecimal te
 ## How to use bin2hex
 
 ```
-bin2hex [-h] [-v] [-i INPUT] [-o OUTPUT] [-f FORMAT] [-a ADDRESS] [-A ALIGNMENT]
+bin2hex [-h] [-v] [-i INPUT] [-o OUTPUT] [-f FORMAT] [-a ADDRESS] [-A ALIGNMENT] [-e ECC] [-c PADCOUNT]
+        [-b PADBYTE] [-s SPLIT]
 
 options:
-  -h, --help            show this help message and exit
+  -h, --help            Show this help message and exit
   -v, --version         Show version information
   -i, --input INPUT     [Required] The raw binary input file to be converted
   -o, --output OUTPUT   [Required] The formatted hex output file to be converted to
   -f, --format FORMAT   [Optional] The format to be converted to. Default is "verilog_dw1"
   -a, --address ADDRESS
-                        [Optional] The start address of the image. Not all formats require. Default is 0x0
+                        [Optional] The start address of the image. Not all formats require. Default is
+                        0x0
   -A, --alignment ALIGNMENT
                         [Optional] The byte count per line. Default is various according to the format
+  -e, --ecc ECC         [Optional] The ECC type to be calculated. Not all formats require. Default is
+                        "none"
+  -c, --padcount PADCOUNT
+                        [Optional] The byte count to be padded to hex lines. Default is 0.
+                        It is useful to generate the hex file which's memory width is larger than data
+                        width, such as FLASH memory with ECC
+  -b, --bytecount BYTECOUNT
+                        [Optional] The padding byte. Due to the typical use case of FLASH memory.
+                        Default is "0xFF"
+  -s, --split SPLIT     [Optional] Split the output into multiple files with suffix "_0", "_1", ...
+                        according to the split byte count.  Must be power of 2. Default is 1(no split)
 ```
 
 ## Supported text file types
