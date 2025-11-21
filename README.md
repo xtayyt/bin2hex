@@ -7,8 +7,8 @@ bin2hex is an utility to convert binary file to multiple types of hexadecimal te
 ## How to use bin2hex
 
 ```
-bin2hex [-h] [-v] [-i INPUT] [-o OUTPUT] [-f FORMAT] [-a ADDRESS] [-A ALIGNMENT] [-e ECC] [-c PADCOUNT]
-        [-b PADBYTE] [-s SPLIT]
+bin2hex [-h] [-v] [-i INPUT] [-o OUTPUT] [-f FORMAT] [-a ADDRESS] [-A ALIGNMENT] [-e ECC]
+        [--ecc-skip-all-ones] [--ecc-skip-all-zeros] [-c PAD_COUNT] [-b PAD_BYTE] [-s SPLIT]
 
 options:
   -h, --help            Show this help message and exit
@@ -23,11 +23,15 @@ options:
                         [Optional] The byte count per line. Default is various according to the format
   -e, --ecc ECC         [Optional] The ECC type to be calculated. Not all formats require. Default is
                         "none"
-  -c, --padcount PADCOUNT
+  --ecc-skip-all-ones   [Optional] Skip ECC calculation for all-ones data blocks. Useful for FLASH
+                        memory with erased state as all-ones
+  --ecc-skip-all-zeros  [Optional] Skip ECC calculation for all-zeros data blocks. Useful for FLASH
+                        memory with erased state as all-zeros
+  -c, --pad-count PADCOUNT
                         [Optional] The byte count to be padded to hex lines. Default is 0.
                         It is useful to generate the hex file which's memory width is larger than data
                         width, such as FLASH memory with ECC
-  -b, --bytecount BYTECOUNT
+  -b, --byte-count BYTECOUNT
                         [Optional] The padding byte. Due to the typical use case of FLASH memory.
                         Default is "0xFF"
   -s, --split SPLIT     [Optional] Split the output into multiple files with suffix "_0", "_1", ...
@@ -37,7 +41,7 @@ options:
 ## Supported text file types
 
 ### C
-1. uint8:
+1. uint8(--format c_uint8):
 - Convert to the c header file which can be included by C source file to init an 'uint8_t' table
 - The option "alignment" is accepted as optional. Default is 16, which means 16 bytes per line
 - The format will be:
@@ -45,7 +49,7 @@ options:
 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
 0x10, 0x11 ......
 ```
-2. uint16:
+2. uint16(--format c_uint16):
 - Convert to the c header file which can be included by C source file to init an 'uint16_t' table
 - The option "alignment" is accepted as optional. Default is 16, which means 16 bytes per line
 - The format will be:
@@ -53,7 +57,7 @@ options:
 0x0100, 0x0302, 0x0504, 0x0706, 0x0908, 0x0B0A, 0x0D0C, 0x0F0E
 0x1110, 0x1312 ......
 ```
-3. uint32:
+3. uint32(--format c_uint32):
 - Convert to the c header file which can be included by C source file to init an 'uint32_t' table
 - The option "alignment" is accepted as optional. Default is 16, which means 16 bytes per line
 - The format will be:
@@ -61,7 +65,7 @@ options:
 0x03020100, 0x07060504, 0x0B0A0908, 0x0F0E0D0C,
 0x13121110, 0x17161514 ......
 ```
-4. uint64:
+4. uint64(--format c_uint64):
 - Convert to the c header file which can be included by C source file to init an 'uint64_t' table.
 - The option "alignment" is accepted as optional. Default is 16, which means 16 bytes per line
 - The format will be:
@@ -70,7 +74,7 @@ options:
 0x1716151413121110,  ......
 ```
 ### Sim Model
-1. Cadence Denali Model
+1. Cadence Denali Model(--format denali)
 - Convert to the file which can be used by Cadence denali model
 - No option is accepted
 - The format will be:
@@ -80,8 +84,8 @@ options:
       ......
 ```
 
-### Verilog HDL
-1. Verilog Data Width 1-Byte:
+### Verilog HDL(VHEX)
+1. Verilog Data Width 1-Byte(--format vhex_dw1 or --format verilog_dw1):
 - Convert to the file which can be loaded by $readmemh to a common memory with 1-byte(8-bit) width
 - No option is accepted
 - The format will be:
@@ -91,7 +95,7 @@ options:
 ......
 ```
 
-2. Verilog Data Width 2-Byte:
+2. Verilog Data Width 2-Byte(--format vhex_dw2 or --format verilog_dw2):
 - Convert to the file which can be loaded by $readmemh to a common memory with 2-byte(16-bit) width
 - No option is accepted
 - The format will be:
@@ -101,7 +105,7 @@ options:
 ......
 ```
 
-3. Verilog Data Width 4-Byte:
+3. Verilog Data Width 4-Byte(--format vhex_dw4 or --format verilog_dw4):
 - Convert to the file which can be loaded by $readmemh to a common memory with 4-byte(32-bit) width
 - No option is accepted
 - The format will be:
@@ -111,7 +115,7 @@ options:
 ......
 ```
 
-4. Verilog Data Width 8-Byte:
+4. Verilog Data Width 8-Byte(--format vhex_dw8 or --format verilog_dw8):
 - Convert to the file which can be loaded by $readmemh to a common memory with 8-byte(64-bit) width
 - No option is accepted
 - The format will be:
@@ -121,7 +125,7 @@ options:
 ......
 ```
 
-5. Verilog Data Width 16-Byte:
+5. Verilog Data Width 16-Byte(--format vhex_dw16 or --format verilog_dw16):
 - Convert to the file which can be loaded by $readmemh to a common memory with 16-byte(128-bit) width
 - No option is accepted
 - The format will be:
@@ -131,7 +135,7 @@ options:
 ......
 ```
 
-6. Verilog Data Width 1-Byte with Address:
+6. Verilog Data Width 1-Byte with Address(--format vhex_addr_dw1 or --format verilog_addr_dw1):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 1-byte(8-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -142,7 +146,7 @@ options:
 ......
 ```
 
-7. Verilog Data Width 2-Byte with Address:
+7. Verilog Data Width 2-Byte with Address(--format vhex_addr_dw2 or --format verilog_addr_dw2):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 2-byte(16-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -153,7 +157,7 @@ options:
 ......
 ```
 
-8. Verilog Data Width 4-Byte with Address:
+8. Verilog Data Width 4-Byte with Address(--format vhex_addr_dw4 or --format verilog_addr_dw4):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 4-byte(32-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -164,7 +168,7 @@ options:
 ......
 ```
 
-9. Verilog Data Width 8-Byte with Address:
+9. Verilog Data Width 8-Byte with Address(--format vhex_addr_dw8 or --format verilog_addr_dw8):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 8-byte(64-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -175,7 +179,7 @@ options:
 ......
 ```
 
-9. Verilog Data Width 16-Byte with Address:
+9. Verilog Data Width 16-Byte with Address(--format vhex_addr_dw16 or --format verilog_addr_dw16):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 16-byte(128-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -186,7 +190,7 @@ options:
 ......
 ```
 
-## Supported text file types
+## Supported ECC Algorithm
 1. None:
 - No ECC is added
 

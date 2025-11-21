@@ -8,6 +8,7 @@
 #
 
 import os
+import sys
 import argparse
 import inspect
 import importlib.util
@@ -52,9 +53,11 @@ format_help = f"[Optional] The format to be converted to. Default is \"{tool_def
 address_help = f"[Optional] The start address of the image. Not all formats require. Default is 0x0"
 alignment_help = f"[Optional] The byte count per line. Default is various according to the format"
 ecc_help = f"[Optional] The ECC type to be calculated. Not all formats require. Default is \"none\""
-padcount_help = f"[Optional] The byte count to be padded to hex lines. Default is 0." + \
+ecc_skip_all_ones_help = f"[Optional] Skip ECC calculation for all-ones data blocks. Useful for FLASH memory with erased state as all-ones"
+ecc_skip_all_zeros_help = f"[Optional] Skip ECC calculation for all-zeros data blocks. Useful for FLASH memory with erased state as all-zeros"
+pad_count_help = f"[Optional] The byte count to be padded to hex lines. Default is 0." + \
                 f"It is useful to generate the hex file which's memory width is larger than data width, such as FLASH memory with ECC"
-padbyte_help = f"[Optional] The padding byte. Due to the typical use case of FLASH memory, default is \"0xFF\""
+pad_byte_help = f"[Optional] The padding byte. Due to the typical use case of FLASH memory, default is \"0xFF\""
 split_help = f"[Optional] Split the output into multiple files with suffix \"_0\", \"_1\", ... according to the split byte count" + \
              f"Must be power of 2. Default is 1(no split)"
 # The entry address is reserved for future use, such as iHex and SRecord
@@ -62,6 +65,9 @@ split_help = f"[Optional] Split the output into multiple files with suffix \"_0\
 
 def safe_open(file:str, mode: str = 'r') -> Optional[BinaryIO]:
     try:
+        if file is None:
+            print(f"Error: No file specified.")
+            return None
         if 'b' in mode:
             return open(file, mode)
         else:
@@ -89,8 +95,10 @@ def main() -> bool:
     parse.add_argument('-a', '--address', type = lambda x:int(x, 0), default = None, help = address_help)
     parse.add_argument('-A', '--alignment', type = lambda x:int(x, 0), default = None, help = alignment_help)
     parse.add_argument('-e', '--ecc', default = None, help = ecc_help)
-    parse.add_argument('-c', '--padcount', type = lambda x:int(x, 0), default = None, help = padcount_help)
-    parse.add_argument('-b', '--padbyte', type = lambda x:int(x, 0), default = None, help = padbyte_help)
+    parse.add_argument('--ecc-skip-all-ones', action='store_true', help = ecc_skip_all_ones_help)
+    parse.add_argument('--ecc-skip-all-zeros', action='store_true', help = ecc_skip_all_zeros_help)
+    parse.add_argument('-c', '--pad-count', type = lambda x:int(x, 0), default = None, help = pad_count_help)
+    parse.add_argument('-b', '--pad-byte', type = lambda x:int(x, 0), default = None, help = pad_byte_help)
     parse.add_argument('-s', '--split', type = lambda x:int(x, 0), default = None, help = split_help)
     #parse.add_argument('-E', '--entry', type = lambda x:int(x, 0), default = None, help=entry_help)
     args = parse.parse_args()
@@ -101,18 +109,27 @@ def main() -> bool:
     start_address = args.address
     align_width = args.alignment
     ecc = args.ecc
-    pad_count = args.padcount
-    pad_byte = args.padbyte
+    ecc_skip_all_ones = args.ecc_skip_all_ones
+    ecc_skip_all_zeros = args.ecc_skip_all_zeros
+    pad_count = args.pad_count
+    pad_byte = args.pad_byte
     split_count = args.split
     #start_entry = args.entry
+
+    if len(sys.argv) == 1:
+        parse.print_usage()
+        return True
 
     if split_count is not None:
         if split_count <= 0 or (split_count & (split_count - 1)) != 0:
             print(f"Warning: The split count {split_count} is not valid. It must be a power of 2 (1, 2, 4, 8, ...). The option will be ignored.")
+            split_count = 1
     else:
         split_count = 1
 
     ifile = safe_open(input_file, 'rb')
+    if ifile is None:
+        return False
 
     ofiles = []
     if split_count == 1:
@@ -125,6 +142,10 @@ def main() -> bool:
     # Check the format is supported
     if convert_format not in format_dict:
         print(f"Error: The format {convert_format} is not supported.")
+        return False
+
+    if ecc_skip_all_ones is True and ecc_skip_all_zeros is True:
+        print(f"Error: Both ecc-skip-all-ones and ecc-skip-all-zeros are enabled. Only one of them can be enabled at a time.")
         return False
 
     # Prepare the conversion function and arguments
@@ -142,6 +163,10 @@ def main() -> bool:
             print(f"Warning: The format {convert_format} does not support \"alignment\" option, which will be ignored.")
     if ecc is not None:
         if "ecc_encode" in inspect.signature(convert_function).parameters:
+            if ecc_skip_all_ones is True:
+                kwargs["ecc_skip"] = 0xFF
+            if ecc_skip_all_zeros is True:
+                kwargs["ecc_skip"] = 0x00
             if ecc in ecc_dict:
                 kwargs["ecc_encode"] = ecc_dict[ecc]["function"]
             else:
@@ -159,6 +184,10 @@ def main() -> bool:
                     kwargs["ecc_encode"] = None
         else:
             print(f"Warning: The format {convert_format} does not support \"ecc\" option, which will be ignored.")
+            if ecc_skip_all_ones is True:
+                print(f"Warning: The format {convert_format} does not support \"ecc\" option, so the \"ecc-skip-all-ones\" option will be ignored.")
+            if ecc_skip_all_zeros is True:
+                print(f"Warning: The format {convert_format} does not support \"ecc\" option, so the \"ecc-skip-all-zeros\" option will be ignored.")
     if pad_count is not None:
         if "pad_count" in inspect.signature(convert_function).parameters:
             kwargs["pad_count"] = pad_count
