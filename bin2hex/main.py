@@ -30,7 +30,7 @@ format_dict = {
     **bin2verilog_dict,
 }
 
-tool_default_format= "verilog_dw1"
+tool_default_format= "vhex_dw1"
 
 tool_description = f"bin2hex is an utility to convert binary file to multiple types of hexadecimal text file"
 tool_epilog = f"Supported format:\n"
