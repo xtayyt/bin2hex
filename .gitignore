@@ -1,5 +1,9 @@
 # Generated files
 *.hex
+*.vhx
+*.vhex
+*.vbin
+*.vbn
 *.h
 
 # Byte-compiled / optimized / DLL files
