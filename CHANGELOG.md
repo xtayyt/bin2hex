@@ -1,5 +1,20 @@
 # ChangeLog
 
+## V2.3.0 - 2025-11-20
+=======================
+### Feature
+- Use new name vhex_dwx and vhex_addr_dwx for VHEX generation
+  - verilog_dwx and verilog_addr_dwx are still kept as alias names
+- Add options to skip erased memory lines when generating ECC bits
+
+### Improvement
+- Rename pad-count and pad-byte options
+
+### Bug Fix
+- Fix an issue that split count is not really ignored if the value is not valid
+- Fix an issue when input_file is not specified
+
+
 ## V2.2.0 - 2025-09-18
 =======================
 ### Feature

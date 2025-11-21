@@ -181,7 +181,12 @@ ecc_dict = {
         "function": None,
         "description": [
             "Custom ECC function defined in the specified Python file",
-            "The Python file should define a function named ecc_encode(data: bytes, data_width: int) -> bytes",
+            "The Python file should define a function named ecc_encode"
+            "```"
+            "def ecc_encode(data: bytes, data_width: int) -> bytes"
+            "    # Add user specific algorithm here"
+            "    return data + ecc_bytes"
+            "```",
             "data is the input data in bytes",
             "data_width is the data width in bytes",
             "The function should return the data with ECC bits appended to the MSB side in bytes",

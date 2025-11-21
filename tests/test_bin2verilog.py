@@ -1,4 +1,4 @@
-# 
+#
 # Copyright 2025 Yitao Zhang
 # All rights reserved.
 #
@@ -31,553 +31,553 @@ test_binary_67_bytes = \
 # Result data and test cases
 
 # verilog_dw1
-test_hex_verilog_dw1_64_bytes = \
+test_hex_vhex_dw1_64_bytes = \
     "45\nD9\n58\n16\n12\n9B\n9D\n47\n96\nBF\n19\n6C\nF6\nD6\n9E\n2D\n" \
     "E6\n59\n1A\nF1\n01\nE2\n01\nEE\nA9\nDB\nDE\nD5\n31\nE5\n79\nA3\n" \
     "88\n7F\n61\n27\nA8\nC6\nC7\n4A\n81\n4C\nEE\n1C\n1B\n5C\nA3\n3D\n" \
     "26\n2E\n8C\n2A\n4F\nE5\n2E\n71\nE0\n55\nFE\nF0\nAD\nDD\nF3\n88"
 
-def test_bin_to_verilog_dw1_64_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw1(test_binary_64_bytes)
-    assert(output_data == test_hex_verilog_dw1_64_bytes)
+def test_bin_to_vhex_dw1_64_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw1(test_binary_64_bytes)
+    assert(output_data == test_hex_vhex_dw1_64_bytes)
 
-test_hex_verilog_dw1_61_bytes = \
+test_hex_vhex_dw1_61_bytes = \
     "45\nD9\n58\n16\n12\n9B\n9D\n47\n96\nBF\n19\n6C\nF6\nD6\n9E\n2D\n" \
     "E6\n59\n1A\nF1\n01\nE2\n01\nEE\nA9\nDB\nDE\nD5\n31\nE5\n79\nA3\n" \
     "88\n7F\n61\n27\nA8\nC6\nC7\n4A\n81\n4C\nEE\n1C\n1B\n5C\nA3\n3D\n" \
     "26\n2E\n8C\n2A\n4F\nE5\n2E\n71\nE0\n55\nFE\nF0\nAD"
 
-def test_bin_to_verilog_dw1_61_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw1(test_binary_61_bytes)
-    assert(output_data == test_hex_verilog_dw1_61_bytes)
+def test_bin_to_vhex_dw1_61_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw1(test_binary_61_bytes)
+    assert(output_data == test_hex_vhex_dw1_61_bytes)
 
-test_hex_verilog_dw1_67_bytes = \
+test_hex_vhex_dw1_67_bytes = \
     "45\nD9\n58\n16\n12\n9B\n9D\n47\n96\nBF\n19\n6C\nF6\nD6\n9E\n2D\n" \
     "E6\n59\n1A\nF1\n01\nE2\n01\nEE\nA9\nDB\nDE\nD5\n31\nE5\n79\nA3\n" \
     "88\n7F\n61\n27\nA8\nC6\nC7\n4A\n81\n4C\nEE\n1C\n1B\n5C\nA3\n3D\n" \
     "26\n2E\n8C\n2A\n4F\nE5\n2E\n71\nE0\n55\nFE\nF0\nAD\nDD\nF3\n88\n" \
     "46\nF2\n48"
 
-def test_bin_to_verilog_dw1_67_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw1(test_binary_67_bytes)
-    assert(output_data == test_hex_verilog_dw1_67_bytes)
+def test_bin_to_vhex_dw1_67_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw1(test_binary_67_bytes)
+    assert(output_data == test_hex_vhex_dw1_67_bytes)
 
 # verilog_dw2
-test_hex_verilog_dw2_64_bytes = \
+test_hex_vhex_dw2_64_bytes = \
     "D945\n1658\n9B12\n479D\nBF96\n6C19\nD6F6\n2D9E\n" \
     "59E6\nF11A\nE201\nEE01\nDBA9\nD5DE\nE531\nA379\n" \
     "7F88\n2761\nC6A8\n4AC7\n4C81\n1CEE\n5C1B\n3DA3\n" \
     "2E26\n2A8C\nE54F\n712E\n55E0\nF0FE\nDDAD\n88F3"
 
-def test_bin_to_verilog_dw2_64_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw2(test_binary_64_bytes)
-    assert(output_data == test_hex_verilog_dw2_64_bytes)
+def test_bin_to_vhex_dw2_64_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw2(test_binary_64_bytes)
+    assert(output_data == test_hex_vhex_dw2_64_bytes)
 
-test_hex_verilog_dw2_61_bytes = \
+test_hex_vhex_dw2_61_bytes = \
     "D945\n1658\n9B12\n479D\nBF96\n6C19\nD6F6\n2D9E\n" \
     "59E6\nF11A\nE201\nEE01\nDBA9\nD5DE\nE531\nA379\n" \
     "7F88\n2761\nC6A8\n4AC7\n4C81\n1CEE\n5C1B\n3DA3\n" \
     "2E26\n2A8C\nE54F\n712E\n55E0\nF0FE\n00AD"
 
-def test_bin_to_verilog_dw2_61_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw2(test_binary_61_bytes)
-    assert(output_data == test_hex_verilog_dw2_61_bytes)
+def test_bin_to_vhex_dw2_61_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw2(test_binary_61_bytes)
+    assert(output_data == test_hex_vhex_dw2_61_bytes)
 
-test_hex_verilog_dw2_67_bytes = \
+test_hex_vhex_dw2_67_bytes = \
     "D945\n1658\n9B12\n479D\nBF96\n6C19\nD6F6\n2D9E\n" \
     "59E6\nF11A\nE201\nEE01\nDBA9\nD5DE\nE531\nA379\n" \
     "7F88\n2761\nC6A8\n4AC7\n4C81\n1CEE\n5C1B\n3DA3\n" \
     "2E26\n2A8C\nE54F\n712E\n55E0\nF0FE\nDDAD\n88F3\n" \
     "F246\n0048"
 
-def test_bin_to_verilog_dw2_67_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw2(test_binary_67_bytes)
-    assert(output_data == test_hex_verilog_dw2_67_bytes)
+def test_bin_to_vhex_dw2_67_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw2(test_binary_67_bytes)
+    assert(output_data == test_hex_vhex_dw2_67_bytes)
 
 # verilog_dw4
-test_hex_verilog_dw4_64_bytes = \
+test_hex_vhex_dw4_64_bytes = \
     "1658D945\n479D9B12\n6C19BF96\n2D9ED6F6\n" \
     "F11A59E6\nEE01E201\nD5DEDBA9\nA379E531\n" \
     "27617F88\n4AC7C6A8\n1CEE4C81\n3DA35C1B\n" \
     "2A8C2E26\n712EE54F\nF0FE55E0\n88F3DDAD"
 
-def test_bin_to_verilog_dw4_64_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw4(test_binary_64_bytes)
-    assert(output_data == test_hex_verilog_dw4_64_bytes)
+def test_bin_to_vhex_dw4_64_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw4(test_binary_64_bytes)
+    assert(output_data == test_hex_vhex_dw4_64_bytes)
 
-test_hex_verilog_dw4_61_bytes = \
+test_hex_vhex_dw4_61_bytes = \
     "1658D945\n479D9B12\n6C19BF96\n2D9ED6F6\n" \
     "F11A59E6\nEE01E201\nD5DEDBA9\nA379E531\n" \
     "27617F88\n4AC7C6A8\n1CEE4C81\n3DA35C1B\n" \
     "2A8C2E26\n712EE54F\nF0FE55E0\n000000AD"
 
-def test_bin_to_verilog_dw4_61_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw4(test_binary_61_bytes)
-    assert(output_data == test_hex_verilog_dw4_61_bytes)
+def test_bin_to_vhex_dw4_61_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw4(test_binary_61_bytes)
+    assert(output_data == test_hex_vhex_dw4_61_bytes)
 
-test_hex_verilog_dw4_67_bytes = \
+test_hex_vhex_dw4_67_bytes = \
     "1658D945\n479D9B12\n6C19BF96\n2D9ED6F6\n" \
     "F11A59E6\nEE01E201\nD5DEDBA9\nA379E531\n" \
     "27617F88\n4AC7C6A8\n1CEE4C81\n3DA35C1B\n" \
     "2A8C2E26\n712EE54F\nF0FE55E0\n88F3DDAD\n" \
     "0048F246"
 
-def test_bin_to_verilog_dw4_67_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw4(test_binary_67_bytes)
-    assert(output_data == test_hex_verilog_dw4_67_bytes)
+def test_bin_to_vhex_dw4_67_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw4(test_binary_67_bytes)
+    assert(output_data == test_hex_vhex_dw4_67_bytes)
 
 # verilog_dw8
-test_hex_verilog_dw8_64_bytes = \
+test_hex_vhex_dw8_64_bytes = \
     "479D9B121658D945\n2D9ED6F66C19BF96\n" \
     "EE01E201F11A59E6\nA379E531D5DEDBA9\n" \
     "4AC7C6A827617F88\n3DA35C1B1CEE4C81\n" \
     "712EE54F2A8C2E26\n88F3DDADF0FE55E0"
 
-def test_bin_to_verilog_dw8_64_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw8(test_binary_64_bytes)
-    assert(output_data == test_hex_verilog_dw8_64_bytes)
+def test_bin_to_vhex_dw8_64_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw8(test_binary_64_bytes)
+    assert(output_data == test_hex_vhex_dw8_64_bytes)
 
-test_hex_verilog_dw8_61_bytes = \
+test_hex_vhex_dw8_61_bytes = \
     "479D9B121658D945\n2D9ED6F66C19BF96\n" \
     "EE01E201F11A59E6\nA379E531D5DEDBA9\n" \
     "4AC7C6A827617F88\n3DA35C1B1CEE4C81\n" \
     "712EE54F2A8C2E26\n000000ADF0FE55E0"
 
-def test_bin_to_verilog_dw8_61_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw8(test_binary_61_bytes)
-    assert(output_data == test_hex_verilog_dw8_61_bytes)
+def test_bin_to_vhex_dw8_61_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw8(test_binary_61_bytes)
+    assert(output_data == test_hex_vhex_dw8_61_bytes)
 
-test_hex_verilog_dw8_67_bytes = \
+test_hex_vhex_dw8_67_bytes = \
     "479D9B121658D945\n2D9ED6F66C19BF96\n" \
     "EE01E201F11A59E6\nA379E531D5DEDBA9\n" \
     "4AC7C6A827617F88\n3DA35C1B1CEE4C81\n" \
     "712EE54F2A8C2E26\n88F3DDADF0FE55E0\n" \
     "000000000048F246"
 
-def test_bin_to_verilog_dw8_67_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw8(test_binary_67_bytes)
-    assert(output_data == test_hex_verilog_dw8_67_bytes)
+def test_bin_to_vhex_dw8_67_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw8(test_binary_67_bytes)
+    assert(output_data == test_hex_vhex_dw8_67_bytes)
 
 # verilog_dw16
-test_hex_verilog_dw16_64_bytes = \
+test_hex_vhex_dw16_64_bytes = \
     "2D9ED6F66C19BF96479D9B121658D945\n" \
     "A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "3DA35C1B1CEE4C814AC7C6A827617F88\n" \
     "88F3DDADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_dw16_64_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw16(test_binary_64_bytes)
-    assert(output_data == test_hex_verilog_dw16_64_bytes)
+def test_bin_to_vhex_dw16_64_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw16(test_binary_64_bytes)
+    assert(output_data == test_hex_vhex_dw16_64_bytes)
 
-test_hex_verilog_dw16_61_bytes = \
+test_hex_vhex_dw16_61_bytes = \
     "2D9ED6F66C19BF96479D9B121658D945\n" \
     "A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "3DA35C1B1CEE4C814AC7C6A827617F88\n" \
     "000000ADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_dw16_61_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw16(test_binary_61_bytes)
-    assert(output_data == test_hex_verilog_dw16_61_bytes)
+def test_bin_to_vhex_dw16_61_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw16(test_binary_61_bytes)
+    assert(output_data == test_hex_vhex_dw16_61_bytes)
 
-test_hex_verilog_dw16_67_bytes = \
+test_hex_vhex_dw16_67_bytes = \
     "2D9ED6F66C19BF96479D9B121658D945\n" \
     "A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "3DA35C1B1CEE4C814AC7C6A827617F88\n" \
     "88F3DDADF0FE55E0712EE54F2A8C2E26\n" \
     "0000000000000000000000000048F246"
 
-def test_bin_to_verilog_dw16_67_bytes():
-    output_data = bin2verilog.bin_to_verilog_dw16(test_binary_67_bytes)
-    assert(output_data == test_hex_verilog_dw16_67_bytes)
+def test_bin_to_vhex_dw16_67_bytes():
+    output_data = bin2verilog.bin_to_vhex_dw16(test_binary_67_bytes)
+    assert(output_data == test_hex_vhex_dw16_67_bytes)
 
 # verilog_addr_dw1
-test_hex_verilog_addr_dw1_64_bytes_32_align = \
+test_hex_vhex_addr_dw1_64_bytes_32_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79 A3\n" \
     "@00000020 88 7F 61 27 A8 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD DD F3 88"
 
-def test_bin_to_verilog_addr_dw1_64_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_64_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw1_64_bytes_32_align)
+def test_bin_to_vhex_addr_dw1_64_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_64_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw1_64_bytes_32_align)
 
-test_hex_verilog_addr_dw1_61_bytes_32_align = \
+test_hex_vhex_addr_dw1_61_bytes_32_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79 A3\n" \
     "@00000020 88 7F 61 27 A8 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD"
 
-def test_bin_to_verilog_addr_dw1_61_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_61_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw1_61_bytes_32_align)
+def test_bin_to_vhex_addr_dw1_61_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_61_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw1_61_bytes_32_align)
 
-test_hex_verilog_addr_dw1_67_bytes_32_align = \
+test_hex_vhex_addr_dw1_67_bytes_32_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79 A3\n" \
     "@00000020 88 7F 61 27 A8 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD DD F3 88\n" \
     "@00000040 46 F2 48"
 
-def test_bin_to_verilog_addr_dw1_67_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_67_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw1_67_bytes_32_align)
+def test_bin_to_vhex_addr_dw1_67_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_67_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw1_67_bytes_32_align)
 
-test_hex_verilog_addr_dw1_64_bytes_31_align = \
+test_hex_vhex_addr_dw1_64_bytes_31_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79\n" \
     "@0000001F A3 88 7F 61 27 A8 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD DD\n" \
     "@0000003E F3 88"
 
-def test_bin_to_verilog_addr_dw1_64_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_64_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw1_64_bytes_31_align)
+def test_bin_to_vhex_addr_dw1_64_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_64_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw1_64_bytes_31_align)
 
-test_hex_verilog_addr_dw1_61_bytes_31_align = \
+test_hex_vhex_addr_dw1_61_bytes_31_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79\n" \
     "@0000001F A3 88 7F 61 27 A8 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD" \
 
-def test_bin_to_verilog_addr_dw1_61_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_61_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw1_61_bytes_31_align)
+def test_bin_to_vhex_addr_dw1_61_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_61_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw1_61_bytes_31_align)
 
-test_hex_verilog_addr_dw1_67_bytes_31_align = \
+test_hex_vhex_addr_dw1_67_bytes_31_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79\n" \
     "@0000001F A3 88 7F 61 27 A8 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD DD\n" \
     "@0000003E F3 88 46 F2 48"
 
-def test_bin_to_verilog_addr_dw1_67_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_67_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw1_67_bytes_31_align)
+def test_bin_to_vhex_addr_dw1_67_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_67_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw1_67_bytes_31_align)
 
-test_hex_verilog_addr_dw1_64_bytes_37_align = \
+test_hex_vhex_addr_dw1_64_bytes_37_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79 A3 88 7F 61 27 A8\n" \
     "@00000025 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD DD F3 88"
 
-def test_bin_to_verilog_addr_dw1_64_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_64_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw1_64_bytes_37_align)
+def test_bin_to_vhex_addr_dw1_64_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_64_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw1_64_bytes_37_align)
 
-test_hex_verilog_addr_dw1_61_bytes_37_align = \
+test_hex_vhex_addr_dw1_61_bytes_37_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79 A3 88 7F 61 27 A8\n" \
     "@00000025 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD"
 
-def test_bin_to_verilog_addr_dw1_61_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_61_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw1_61_bytes_37_align)
+def test_bin_to_vhex_addr_dw1_61_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_61_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw1_61_bytes_37_align)
 
-test_hex_verilog_addr_dw1_67_bytes_37_align = \
+test_hex_vhex_addr_dw1_67_bytes_37_align = \
     "@00000000 45 D9 58 16 12 9B 9D 47 96 BF 19 6C F6 D6 9E 2D E6 59 1A F1 01 E2 01 EE A9 DB DE D5 31 E5 79 A3 88 7F 61 27 A8\n" \
     "@00000025 C6 C7 4A 81 4C EE 1C 1B 5C A3 3D 26 2E 8C 2A 4F E5 2E 71 E0 55 FE F0 AD DD F3 88 46 F2 48"
 
-def test_bin_to_verilog_addr_dw1_67_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw1(test_binary_67_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw1_67_bytes_37_align)
+def test_bin_to_vhex_addr_dw1_67_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw1(test_binary_67_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw1_67_bytes_37_align)
 
 # verilog_addr_dw2
-test_hex_verilog_addr_dw2_64_bytes_32_align = \
+test_hex_vhex_addr_dw2_64_bytes_32_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379\n" \
     "@00000020 7F88 2761 C6A8 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE DDAD 88F3"
 
-def test_bin_to_verilog_addr_dw2_64_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_64_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw2_64_bytes_32_align)
+def test_bin_to_vhex_addr_dw2_64_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_64_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw2_64_bytes_32_align)
 
-test_hex_verilog_addr_dw2_61_bytes_32_align = \
+test_hex_vhex_addr_dw2_61_bytes_32_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379\n" \
     "@00000020 7F88 2761 C6A8 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE 00AD"
 
-def test_bin_to_verilog_addr_dw2_61_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_61_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw2_61_bytes_32_align)
+def test_bin_to_vhex_addr_dw2_61_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_61_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw2_61_bytes_32_align)
 
-test_hex_verilog_addr_dw2_67_bytes_32_align = \
+test_hex_vhex_addr_dw2_67_bytes_32_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379\n" \
     "@00000020 7F88 2761 C6A8 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE DDAD 88F3\n" \
     "@00000040 F246 0048"
 
-def test_bin_to_verilog_addr_dw2_67_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_67_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw2_67_bytes_32_align)
+def test_bin_to_vhex_addr_dw2_67_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_67_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw2_67_bytes_32_align)
 
-test_hex_verilog_addr_dw2_64_bytes_31_align = \
+test_hex_vhex_addr_dw2_64_bytes_31_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379\n" \
     "@00000020 7F88 2761 C6A8 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE DDAD 88F3"
 
-def test_bin_to_verilog_addr_dw2_64_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_64_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw2_64_bytes_31_align)
+def test_bin_to_vhex_addr_dw2_64_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_64_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw2_64_bytes_31_align)
 
-test_hex_verilog_addr_dw2_61_bytes_31_align = \
+test_hex_vhex_addr_dw2_61_bytes_31_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379\n" \
     "@00000020 7F88 2761 C6A8 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE 00AD"
 
-def test_bin_to_verilog_addr_dw2_61_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_61_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw2_61_bytes_31_align)
+def test_bin_to_vhex_addr_dw2_61_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_61_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw2_61_bytes_31_align)
 
-test_hex_verilog_addr_dw2_67_bytes_31_align = \
+test_hex_vhex_addr_dw2_67_bytes_31_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379\n" \
     "@00000020 7F88 2761 C6A8 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE DDAD 88F3\n" \
     "@00000040 F246 0048"
 
-def test_bin_to_verilog_addr_dw2_67_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_67_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw2_67_bytes_31_align)
+def test_bin_to_vhex_addr_dw2_67_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_67_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw2_67_bytes_31_align)
 
-test_hex_verilog_addr_dw2_64_bytes_37_align = \
+test_hex_vhex_addr_dw2_64_bytes_37_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379 7F88 2761 C6A8\n" \
     "@00000026 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE DDAD 88F3"
 
-def test_bin_to_verilog_addr_dw2_64_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_64_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw2_64_bytes_37_align)
+def test_bin_to_vhex_addr_dw2_64_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_64_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw2_64_bytes_37_align)
 
-test_hex_verilog_addr_dw2_61_bytes_37_align = \
+test_hex_vhex_addr_dw2_61_bytes_37_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379 7F88 2761 C6A8\n" \
     "@00000026 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE 00AD"
 
-def test_bin_to_verilog_addr_dw2_61_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_61_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw2_61_bytes_37_align)
+def test_bin_to_vhex_addr_dw2_61_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_61_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw2_61_bytes_37_align)
 
-test_hex_verilog_addr_dw2_67_bytes_37_align = \
+test_hex_vhex_addr_dw2_67_bytes_37_align = \
     "@00000000 D945 1658 9B12 479D BF96 6C19 D6F6 2D9E 59E6 F11A E201 EE01 DBA9 D5DE E531 A379 7F88 2761 C6A8\n" \
     "@00000026 4AC7 4C81 1CEE 5C1B 3DA3 2E26 2A8C E54F 712E 55E0 F0FE DDAD 88F3 F246 0048"
 
-def test_bin_to_verilog_addr_dw2_67_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_67_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw2_67_bytes_37_align)
+def test_bin_to_vhex_addr_dw2_67_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_67_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw2_67_bytes_37_align)
 
-def test_bin_to_verilog_addr_dw2_invalid_address():
+def test_bin_to_vhex_addr_dw2_invalid_address():
     with pytest.raises(ValueError):
-        output_data = bin2verilog.bin_to_verilog_addr_dw2(test_binary_64_bytes, 0x1, 32)
+        output_data = bin2verilog.bin_to_vhex_addr_dw2(test_binary_64_bytes, 0x1, 32)
 
 # verilog_addr_dw4
-test_hex_verilog_addr_dw4_64_bytes_32_align = \
+test_hex_vhex_addr_dw4_64_bytes_32_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531\n" \
     "@00000020 27617F88 4AC7C6A8 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 88F3DDAD"
 
-def test_bin_to_verilog_addr_dw4_64_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_64_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw4_64_bytes_32_align)
+def test_bin_to_vhex_addr_dw4_64_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_64_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw4_64_bytes_32_align)
 
-test_hex_verilog_addr_dw4_61_bytes_32_align = \
+test_hex_vhex_addr_dw4_61_bytes_32_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531\n" \
     "@00000020 27617F88 4AC7C6A8 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 000000AD"
 
-def test_bin_to_verilog_addr_dw4_61_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_61_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw4_61_bytes_32_align)
+def test_bin_to_vhex_addr_dw4_61_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_61_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw4_61_bytes_32_align)
 
-test_hex_verilog_addr_dw4_67_bytes_32_align = \
+test_hex_vhex_addr_dw4_67_bytes_32_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531\n" \
     "@00000020 27617F88 4AC7C6A8 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 88F3DDAD\n" \
     "@00000040 0048F246"
 
-def test_bin_to_verilog_addr_dw4_67_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_67_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw4_67_bytes_32_align)
+def test_bin_to_vhex_addr_dw4_67_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_67_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw4_67_bytes_32_align)
 
-test_hex_verilog_addr_dw4_64_bytes_31_align = \
+test_hex_vhex_addr_dw4_64_bytes_31_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531\n" \
     "@00000020 27617F88 4AC7C6A8 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 88F3DDAD"
 
-def test_bin_to_verilog_addr_dw4_64_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_64_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw4_64_bytes_31_align)
+def test_bin_to_vhex_addr_dw4_64_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_64_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw4_64_bytes_31_align)
 
-test_hex_verilog_addr_dw4_61_bytes_31_align = \
+test_hex_vhex_addr_dw4_61_bytes_31_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531\n" \
     "@00000020 27617F88 4AC7C6A8 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 000000AD"
 
-def test_bin_to_verilog_addr_dw4_61_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_61_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw4_61_bytes_31_align)
+def test_bin_to_vhex_addr_dw4_61_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_61_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw4_61_bytes_31_align)
 
-test_hex_verilog_addr_dw4_67_bytes_31_align = \
+test_hex_vhex_addr_dw4_67_bytes_31_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531\n" \
     "@00000020 27617F88 4AC7C6A8 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 88F3DDAD\n" \
     "@00000040 0048F246"
 
-def test_bin_to_verilog_addr_dw4_67_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_67_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw4_67_bytes_31_align)
+def test_bin_to_vhex_addr_dw4_67_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_67_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw4_67_bytes_31_align)
 
-test_hex_verilog_addr_dw4_64_bytes_37_align = \
+test_hex_vhex_addr_dw4_64_bytes_37_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531 27617F88 4AC7C6A8\n" \
     "@00000028 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 88F3DDAD"
 
-def test_bin_to_verilog_addr_dw4_64_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_64_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw4_64_bytes_37_align)
+def test_bin_to_vhex_addr_dw4_64_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_64_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw4_64_bytes_37_align)
 
-test_hex_verilog_addr_dw4_61_bytes_37_align = \
+test_hex_vhex_addr_dw4_61_bytes_37_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531 27617F88 4AC7C6A8\n" \
     "@00000028 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 000000AD"
 
-def test_bin_to_verilog_addr_dw4_61_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_61_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw4_61_bytes_37_align)
+def test_bin_to_vhex_addr_dw4_61_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_61_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw4_61_bytes_37_align)
 
-test_hex_verilog_addr_dw4_67_bytes_37_align = \
+test_hex_vhex_addr_dw4_67_bytes_37_align = \
     "@00000000 1658D945 479D9B12 6C19BF96 2D9ED6F6 F11A59E6 EE01E201 D5DEDBA9 A379E531 27617F88 4AC7C6A8\n" \
     "@00000028 1CEE4C81 3DA35C1B 2A8C2E26 712EE54F F0FE55E0 88F3DDAD 0048F246"
 
-def test_bin_to_verilog_addr_dw4_67_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_67_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw4_67_bytes_37_align)
+def test_bin_to_vhex_addr_dw4_67_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_67_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw4_67_bytes_37_align)
 
-def test_bin_to_verilog_addr_dw4_invalid_address():
+def test_bin_to_vhex_addr_dw4_invalid_address():
     with pytest.raises(ValueError):
-        output_data = bin2verilog.bin_to_verilog_addr_dw4(test_binary_64_bytes, 0x2, 32)
+        output_data = bin2verilog.bin_to_vhex_addr_dw4(test_binary_64_bytes, 0x2, 32)
 
 # verilog_addr_dw8
-test_hex_verilog_addr_dw8_64_bytes_32_align = \
+test_hex_vhex_addr_dw8_64_bytes_32_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9\n" \
     "@00000020 4AC7C6A827617F88 3DA35C1B1CEE4C81 712EE54F2A8C2E26 88F3DDADF0FE55E0"
 
-def test_bin_to_verilog_addr_dw8_64_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_64_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw8_64_bytes_32_align)
+def test_bin_to_vhex_addr_dw8_64_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_64_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw8_64_bytes_32_align)
 
-test_hex_verilog_addr_dw8_61_bytes_32_align = \
+test_hex_vhex_addr_dw8_61_bytes_32_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9\n" \
     "@00000020 4AC7C6A827617F88 3DA35C1B1CEE4C81 712EE54F2A8C2E26 000000ADF0FE55E0"
 
-def test_bin_to_verilog_addr_dw8_61_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_61_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw8_61_bytes_32_align)
+def test_bin_to_vhex_addr_dw8_61_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_61_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw8_61_bytes_32_align)
 
-test_hex_verilog_addr_dw8_67_bytes_32_align = \
+test_hex_vhex_addr_dw8_67_bytes_32_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9\n" \
     "@00000020 4AC7C6A827617F88 3DA35C1B1CEE4C81 712EE54F2A8C2E26 88F3DDADF0FE55E0\n" \
     "@00000040 000000000048F246"
 
-def test_bin_to_verilog_addr_dw8_67_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_67_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw8_67_bytes_32_align)
+def test_bin_to_vhex_addr_dw8_67_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_67_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw8_67_bytes_32_align)
 
-test_hex_verilog_addr_dw8_64_bytes_31_align = \
+test_hex_vhex_addr_dw8_64_bytes_31_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9\n" \
     "@00000020 4AC7C6A827617F88 3DA35C1B1CEE4C81 712EE54F2A8C2E26 88F3DDADF0FE55E0"
 
-def test_bin_to_verilog_addr_dw8_64_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_64_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw8_64_bytes_31_align)
+def test_bin_to_vhex_addr_dw8_64_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_64_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw8_64_bytes_31_align)
 
-test_hex_verilog_addr_dw8_61_bytes_31_align = \
+test_hex_vhex_addr_dw8_61_bytes_31_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9\n" \
     "@00000020 4AC7C6A827617F88 3DA35C1B1CEE4C81 712EE54F2A8C2E26 000000ADF0FE55E0"
 
-def test_bin_to_verilog_addr_dw8_61_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_61_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw8_61_bytes_31_align)
+def test_bin_to_vhex_addr_dw8_61_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_61_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw8_61_bytes_31_align)
 
-test_hex_verilog_addr_dw8_67_bytes_31_align = \
+test_hex_vhex_addr_dw8_67_bytes_31_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9\n" \
     "@00000020 4AC7C6A827617F88 3DA35C1B1CEE4C81 712EE54F2A8C2E26 88F3DDADF0FE55E0\n" \
     "@00000040 000000000048F246"
 
-def test_bin_to_verilog_addr_dw8_67_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_67_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw8_67_bytes_31_align)
+def test_bin_to_vhex_addr_dw8_67_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_67_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw8_67_bytes_31_align)
 
-test_hex_verilog_addr_dw8_64_bytes_37_align = \
+test_hex_vhex_addr_dw8_64_bytes_37_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9 4AC7C6A827617F88\n" \
     "@00000028 3DA35C1B1CEE4C81 712EE54F2A8C2E26 88F3DDADF0FE55E0"
 
-def test_bin_to_verilog_addr_dw8_64_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_64_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw8_64_bytes_37_align)
+def test_bin_to_vhex_addr_dw8_64_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_64_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw8_64_bytes_37_align)
 
-test_hex_verilog_addr_dw8_61_bytes_37_align = \
+test_hex_vhex_addr_dw8_61_bytes_37_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9 4AC7C6A827617F88\n" \
     "@00000028 3DA35C1B1CEE4C81 712EE54F2A8C2E26 000000ADF0FE55E0"
 
-def test_bin_to_verilog_addr_dw8_61_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_61_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw8_61_bytes_37_align)
+def test_bin_to_vhex_addr_dw8_61_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_61_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw8_61_bytes_37_align)
 
-test_hex_verilog_addr_dw8_67_bytes_37_align = \
+test_hex_vhex_addr_dw8_67_bytes_37_align = \
     "@00000000 479D9B121658D945 2D9ED6F66C19BF96 EE01E201F11A59E6 A379E531D5DEDBA9 4AC7C6A827617F88\n" \
     "@00000028 3DA35C1B1CEE4C81 712EE54F2A8C2E26 88F3DDADF0FE55E0 000000000048F246"
 
-def test_bin_to_verilog_addr_dw8_67_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_67_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw8_67_bytes_37_align)
+def test_bin_to_vhex_addr_dw8_67_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_67_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw8_67_bytes_37_align)
 
-def test_bin_to_verilog_addr_dw8_invalid_address():
+def test_bin_to_vhex_addr_dw8_invalid_address():
     with pytest.raises(ValueError):
-        output_data = bin2verilog.bin_to_verilog_addr_dw8(test_binary_64_bytes, 0x4, 32)
+        output_data = bin2verilog.bin_to_vhex_addr_dw8(test_binary_64_bytes, 0x4, 32)
 
 # verilog_addr_dw16
-test_hex_verilog_addr_dw16_64_bytes_32_align = \
+test_hex_vhex_addr_dw16_64_bytes_32_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "@00000020 3DA35C1B1CEE4C814AC7C6A827617F88 88F3DDADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_addr_dw16_64_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_64_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw16_64_bytes_32_align)
+def test_bin_to_vhex_addr_dw16_64_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_64_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw16_64_bytes_32_align)
 
-test_hex_verilog_addr_dw16_61_bytes_32_align = \
+test_hex_vhex_addr_dw16_61_bytes_32_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "@00000020 3DA35C1B1CEE4C814AC7C6A827617F88 000000ADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_addr_dw16_61_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_61_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw16_61_bytes_32_align)
+def test_bin_to_vhex_addr_dw16_61_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_61_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw16_61_bytes_32_align)
 
-test_hex_verilog_addr_dw16_67_bytes_32_align = \
+test_hex_vhex_addr_dw16_67_bytes_32_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "@00000020 3DA35C1B1CEE4C814AC7C6A827617F88 88F3DDADF0FE55E0712EE54F2A8C2E26\n" \
     "@00000040 0000000000000000000000000048F246"
 
-def test_bin_to_verilog_addr_dw16_67_bytes_32_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_67_bytes, 0, 32)
-    assert(output_data == test_hex_verilog_addr_dw16_67_bytes_32_align)
+def test_bin_to_vhex_addr_dw16_67_bytes_32_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_67_bytes, 0, 32)
+    assert(output_data == test_hex_vhex_addr_dw16_67_bytes_32_align)
 
-test_hex_verilog_addr_dw16_64_bytes_31_align = \
+test_hex_vhex_addr_dw16_64_bytes_31_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "@00000020 3DA35C1B1CEE4C814AC7C6A827617F88 88F3DDADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_addr_dw16_64_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_64_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw16_64_bytes_31_align)
+def test_bin_to_vhex_addr_dw16_64_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_64_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw16_64_bytes_31_align)
 
-test_hex_verilog_addr_dw16_61_bytes_31_align = \
+test_hex_vhex_addr_dw16_61_bytes_31_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "@00000020 3DA35C1B1CEE4C814AC7C6A827617F88 000000ADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_addr_dw16_61_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_61_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw16_61_bytes_31_align)
+def test_bin_to_vhex_addr_dw16_61_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_61_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw16_61_bytes_31_align)
 
-test_hex_verilog_addr_dw16_67_bytes_31_align = \
+test_hex_vhex_addr_dw16_67_bytes_31_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6\n" \
     "@00000020 3DA35C1B1CEE4C814AC7C6A827617F88 88F3DDADF0FE55E0712EE54F2A8C2E26\n" \
     "@00000040 0000000000000000000000000048F246"
 
-def test_bin_to_verilog_addr_dw16_67_bytes_31_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_67_bytes, 0, 31)
-    assert(output_data == test_hex_verilog_addr_dw16_67_bytes_31_align)
+def test_bin_to_vhex_addr_dw16_67_bytes_31_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_67_bytes, 0, 31)
+    assert(output_data == test_hex_vhex_addr_dw16_67_bytes_31_align)
 
-test_hex_verilog_addr_dw16_64_bytes_37_align = \
+test_hex_vhex_addr_dw16_64_bytes_37_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6 3DA35C1B1CEE4C814AC7C6A827617F88\n" \
     "@00000030 88F3DDADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_addr_dw16_64_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_64_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw16_64_bytes_37_align)
+def test_bin_to_vhex_addr_dw16_64_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_64_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw16_64_bytes_37_align)
 
-test_hex_verilog_addr_dw16_61_bytes_37_align = \
+test_hex_vhex_addr_dw16_61_bytes_37_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6 3DA35C1B1CEE4C814AC7C6A827617F88\n" \
     "@00000030 000000ADF0FE55E0712EE54F2A8C2E26"
 
-def test_bin_to_verilog_addr_dw16_61_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_61_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw16_61_bytes_37_align)
+def test_bin_to_vhex_addr_dw16_61_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_61_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw16_61_bytes_37_align)
 
-test_hex_verilog_addr_dw16_67_bytes_37_align = \
+test_hex_vhex_addr_dw16_67_bytes_37_align = \
     "@00000000 2D9ED6F66C19BF96479D9B121658D945 A379E531D5DEDBA9EE01E201F11A59E6 3DA35C1B1CEE4C814AC7C6A827617F88\n" \
     "@00000030 88F3DDADF0FE55E0712EE54F2A8C2E26 0000000000000000000000000048F246"
 
-def test_bin_to_verilog_addr_dw16_67_bytes_37_align():
-    output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_67_bytes, 0, 37)
-    assert(output_data == test_hex_verilog_addr_dw16_67_bytes_37_align)
+def test_bin_to_vhex_addr_dw16_67_bytes_37_align():
+    output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_67_bytes, 0, 37)
+    assert(output_data == test_hex_vhex_addr_dw16_67_bytes_37_align)
 
-def test_bin_to_verilog_addr_dw16_invalid_address():
+def test_bin_to_vhex_addr_dw16_invalid_address():
     with pytest.raises(ValueError):
-        output_data = bin2verilog.bin_to_verilog_addr_dw16(test_binary_64_bytes, 0x4, 32)
+        output_data = bin2verilog.bin_to_vhex_addr_dw16(test_binary_64_bytes, 0x4, 32)

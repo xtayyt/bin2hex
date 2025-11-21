@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF, swap_endian:int = False) -> str:
+def bin_to_vhex_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF, swap_endian:int = False) -> str:
     output_data = ""
     count = 0
 
@@ -19,7 +19,14 @@ def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable
                 data +=b'\x00' * (data_width - len(data))
 
             if ecc_encode is not None:
+                clean_ecc = False
+                if ecc_skip is not None:
+                    if all(b == (ecc_skip & 0xFF) for b in data):
+                        clean_ecc = True
                 data = ecc_encode(data, data_width)
+                # We cannot skip ECC encoding, because the ECC bit count is unknown here
+                if clean_ecc:
+                    data = bytes([ecc_skip] * len(data))
 
             # Pad the data if required
             if pad_count > 0:
@@ -45,22 +52,22 @@ def bin_to_verilog_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable
 
     return output_data
 
-def bin_to_verilog_dw1(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_verilog_dwn(input_data, 1, ecc_encode, pad_count, pad_byte, False)
+def bin_to_vhex_dw1(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vhex_dwn(input_data, 1, ecc_encode, ecc_skip, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw2(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_verilog_dwn(input_data, 2, ecc_encode, pad_count, pad_byte, False)
+def bin_to_vhex_dw2(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vhex_dwn(input_data, 2, ecc_encode, ecc_skip, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw4(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_verilog_dwn(input_data, 4, ecc_encode, pad_count, pad_byte, False)
+def bin_to_vhex_dw4(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vhex_dwn(input_data, 4, ecc_encode, ecc_skip, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw8(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_verilog_dwn(input_data, 8, ecc_encode, pad_count, pad_byte, False)
+def bin_to_vhex_dw8(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vhex_dwn(input_data, 8, ecc_encode, ecc_skip, pad_count, pad_byte, False)
 
-def bin_to_verilog_dw16(input_data:bytes, ecc_encode:callable = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_verilog_dwn(input_data, 16, ecc_encode, pad_count, pad_byte, False)
+def bin_to_vhex_dw16(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vhex_dwn(input_data, 16, ecc_encode, ecc_skip, pad_count, pad_byte, False)
 
-def bin_to_verilog_addr_dwn(input_data:bytes , start_address:int = 0x0, align_width:int = 4, data_width:int = 1, swap_endian:bool = False) -> str:
+def bin_to_vhex_addr_dwn(input_data:bytes , start_address:int = 0x0, align_width:int = 4, data_width:int = 1, swap_endian:bool = False) -> str:
     output_data = ""
     count = 0
     align_count = 0
@@ -106,89 +113,129 @@ def bin_to_verilog_addr_dwn(input_data:bytes , start_address:int = 0x0, align_wi
 
     return output_data
 
-def bin_to_verilog_addr_dw1(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
-    return bin_to_verilog_addr_dwn(input_data, start_address, align_width, 1, False)
+def bin_to_vhex_addr_dw1(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
+    return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 1, False)
 
-def bin_to_verilog_addr_dw2(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
-    return bin_to_verilog_addr_dwn(input_data, start_address, align_width, 2, False)
+def bin_to_vhex_addr_dw2(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
+    return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 2, False)
 
-def bin_to_verilog_addr_dw4(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
-    return bin_to_verilog_addr_dwn(input_data, start_address, align_width, 4, False)
+def bin_to_vhex_addr_dw4(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
+    return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 4, False)
 
-def bin_to_verilog_addr_dw8(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
-    return bin_to_verilog_addr_dwn(input_data, start_address, align_width, 8, False)
+def bin_to_vhex_addr_dw8(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
+    return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 8, False)
 
-def bin_to_verilog_addr_dw16(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
-    return bin_to_verilog_addr_dwn(input_data, start_address, align_width, 16, False)
+def bin_to_vhex_addr_dw16(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
+    return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 16, False)
 
 bin2verilog_dict = {
-    "verilog_dw1": {
-        "function": bin_to_verilog_dw1,
+    "vhex_dw1": {
+        "function": bin_to_vhex_dw1,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 1-byte(8-bit) width",
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
-            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
-            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  00",
             "  01",
             "  ......",
         ],
     },
-    "verilog_dw2": {
-        "function": bin_to_verilog_dw2,
+    "vhex_dw2": {
+        "function": bin_to_vhex_dw2,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 2-byte(16-bit) width",
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
-            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
-            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  0100",
             "  0302",
             "  ......",
         ],
     },
-    "verilog_dw4": {
-        "function": bin_to_verilog_dw4,
+    "vhex_dw4": {
+        "function": bin_to_vhex_dw4,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 4-byte(32-bit) width",
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
-            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
-            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  03020100",
             "  07060504",
             "  ......",
         ],
     },
-    "verilog_dw8": {
-        "function": bin_to_verilog_dw8,
+    "vhex_dw8": {
+        "function": bin_to_vhex_dw8,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 8-byte(64-bit) width",
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
-            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
-            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  0706050403020100",
             "  0F0E0D0C0B0A0908",
             "  ......",
         ],
     },
-    "verilog_dw16": {
-        "function": bin_to_verilog_dw16,
+    "vhex_dw16": {
+        "function": bin_to_vhex_dw16,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a common memory with 16-byte(128-bit) width",
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
-            "The option \"padcount\" is accepted as optional. Default is 0 which means no padding",
-            "The option \"padbyte\" is accepted as optional. Default is \"0xFF\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
             "  0F0E0D0C0B0A09080706050403020100",
             "  1F1E1D1C1B1A19181716151413121110",
             "  ......",
         ],
     },
-    "verilog_addr_dw1": {
-        "function": bin_to_verilog_addr_dw1,
+    "verilog_dw1": {
+        "function": bin_to_vhex_dw1,
+        "description": [
+            "Alias name of \"vhex_dw1\" format",
+        ],
+    },
+    "verilog_dw2": {
+        "function": bin_to_vhex_dw2,
+        "description": [
+            "Alias name of \"vhex_dw2\" format",
+        ],
+    },
+    "verilog_dw4": {
+        "function": bin_to_vhex_dw4,
+        "description": [
+            "Alias name of \"vhex_dw4\" format",
+        ],
+    },
+    "verilog_dw8": {
+        "function": bin_to_vhex_dw8,
+        "description": [
+            "Alias name of \"vhex_dw8\" format",
+        ],
+    },
+    "verilog_dw16": {
+        "function": bin_to_vhex_dw16,
+        "description": [
+            "Alias name of \"vhex_dw16\" format",
+        ],
+    },
+    "vhex_addr_dw1": {
+        "function": bin_to_vhex_addr_dw1,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 1-byte(8-bit) width",
             "The option \"address\" is accepted as optional. Default is 0x0",
@@ -199,8 +246,8 @@ bin2verilog_dict = {
             "  ......",
         ],
     },
-    "verilog_addr_dw2": {
-        "function": bin_to_verilog_addr_dw2,
+    "vhex_addr_dw2": {
+        "function": bin_to_vhex_addr_dw2,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 2-byte(16-bit) width",
             "The option \"address\" is accepted as optional. Default is 0x0",
@@ -211,8 +258,8 @@ bin2verilog_dict = {
             "  ......",
         ],
     },
-    "verilog_addr_dw4": {
-        "function": bin_to_verilog_addr_dw4,
+    "vhex_addr_dw4": {
+        "function": bin_to_vhex_addr_dw4,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 4-byte(32-bit) width",
             "The option \"address\" is accepted as optional. Default is 0x0",
@@ -223,8 +270,8 @@ bin2verilog_dict = {
             "  ......",
         ],
     },
-    "verilog_addr_dw8": {
-        "function": bin_to_verilog_addr_dw8,
+    "vhex_addr_dw8": {
+        "function": bin_to_vhex_addr_dw8,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 8-byte(64-bit) width",
             "The option \"address\" is accepted as optional. Default is 0x0",
@@ -235,8 +282,8 @@ bin2verilog_dict = {
             "  ......",
         ],
     },
-    "verilog_addr_dw16": {
-        "function": bin_to_verilog_addr_dw16,
+    "vhex_addr_dw16": {
+        "function": bin_to_vhex_addr_dw16,
         "description": [
             "Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 16-byte(128-bit) width",
             "The option \"address\" is accepted as optional. Default is 0x0",
@@ -245,6 +292,36 @@ bin2verilog_dict = {
             "  @0x00000000 0F0E0D0C0B0A09080706050403020100 1F1E1D1C1B1A19181716151413121110",
             "  @0x00000020 2F2E2D2C2B2A29282726252423222120 3F3E3D3C3B3A39383736353433323130",
             "  ......",
+        ],
+    },
+    "verilog_addr_dw1": {
+        "function": bin_to_vhex_addr_dw1,
+        "description": [
+            "Alias name of \"vhex_addr_dw1\" format",
+        ],
+    },
+    "verilog_addr_dw2": {
+        "function": bin_to_vhex_addr_dw2,
+        "description": [
+            "Alias name of \"vhex_addr_dw2\" format",
+        ],
+    },
+    "verilog_addr_dw4": {
+        "function": bin_to_vhex_addr_dw4,
+        "description": [
+            "Alias name of \"vhex_addr_dw4\" format",
+        ],
+    },
+    "verilog_addr_dw8": {
+        "function": bin_to_vhex_addr_dw8,
+        "description": [
+            "Alias name of \"vhex_addr_dw8\" format",
+        ],
+    },
+    "verilog_addr_dw16": {
+        "function": bin_to_vhex_addr_dw16,
+        "description": [
+            "Alias name of \"vhex_addr_dw16\" format",
         ],
     },
 }
