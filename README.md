@@ -87,7 +87,11 @@ options:
 ### Verilog HDL(VHEX)
 1. Verilog Data Width 1-Byte(--format vhex_dw1 or --format verilog_dw1):
 - Convert to the file which can be loaded by $readmemh to a common memory with 1-byte(8-bit) width
-- No option is accepted
+- The option \"ecc\" is accepted as optional. Default is \"none\"
+- The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
+- The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip
+- The option \"pad-count\" is accepted as optional. Default is 0 which means no padding
+- The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"
 - The format will be:
 ```
 00
@@ -97,7 +101,11 @@ options:
 
 2. Verilog Data Width 2-Byte(--format vhex_dw2 or --format verilog_dw2):
 - Convert to the file which can be loaded by $readmemh to a common memory with 2-byte(16-bit) width
-- No option is accepted
+- The option \"ecc\" is accepted as optional. Default is \"none\"
+- The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
+- The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip
+- The option \"pad-count\" is accepted as optional. Default is 0 which means no padding
+- The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"
 - The format will be:
 ```
 0100
@@ -107,7 +115,11 @@ options:
 
 3. Verilog Data Width 4-Byte(--format vhex_dw4 or --format verilog_dw4):
 - Convert to the file which can be loaded by $readmemh to a common memory with 4-byte(32-bit) width
-- No option is accepted
+- The option \"ecc\" is accepted as optional. Default is \"none\"
+- The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
+- The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip
+- The option \"pad-count\" is accepted as optional. Default is 0 which means no padding
+- The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"
 - The format will be:
 ```
 03020100
@@ -117,7 +129,11 @@ options:
 
 4. Verilog Data Width 8-Byte(--format vhex_dw8 or --format verilog_dw8):
 - Convert to the file which can be loaded by $readmemh to a common memory with 8-byte(64-bit) width
-- No option is accepted
+- The option \"ecc\" is accepted as optional. Default is \"none\"
+- The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
+- The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip
+- The option \"pad-count\" is accepted as optional. Default is 0 which means no padding
+- The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"
 - The format will be:
 ```
 0706050403020100
@@ -127,7 +143,11 @@ options:
 
 5. Verilog Data Width 16-Byte(--format vhex_dw16 or --format verilog_dw16):
 - Convert to the file which can be loaded by $readmemh to a common memory with 16-byte(128-bit) width
-- No option is accepted
+- The option \"ecc\" is accepted as optional. Default is \"none\"
+- The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
+- The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip
+- The option \"pad-count\" is accepted as optional. Default is 0 which means no padding
+- The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"
 - The format will be:
 ```
 0F0E0D0C0B0A09080706050403020100
