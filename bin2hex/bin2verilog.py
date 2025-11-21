@@ -128,6 +128,29 @@ def bin_to_vhex_addr_dw8(input_data:bytes, start_address:int = 0x0, align_width:
 def bin_to_vhex_addr_dw16(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
     return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 16, False)
 
+def bin_to_vbin_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF, swap_endian:int = False) -> str:
+    data = bin_to_vhex_dwn(input_data, data_width, ecc_encode, ecc_skip, pad_count, pad_byte, swap_endian)
+    data_lines = data.splitlines()
+    data_bin = ""
+    for data_line in data_lines:
+        data_bin += bin(int(data_line,16))[2:].zfill(len(data_line)*4) + '\n'
+    return data_bin.rstrip('\n')
+
+def bin_to_vbin_dw1(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vbin_dwn(input_data, 1, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+
+def bin_to_vbin_dw2(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vbin_dwn(input_data, 2, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+
+def bin_to_vbin_dw4(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vbin_dwn(input_data, 4, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+
+def bin_to_vbin_dw8(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vbin_dwn(input_data, 8, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+
+def bin_to_vbin_dw16(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
+    return bin_to_vbin_dwn(input_data, 16, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+
 bin2verilog_dict = {
     "vhex_dw1": {
         "function": bin_to_vhex_dw1,
@@ -322,6 +345,81 @@ bin2verilog_dict = {
         "function": bin_to_vhex_addr_dw16,
         "description": [
             "Alias name of \"vhex_addr_dw16\" format",
+        ],
+    },
+    "vbin_dw1": {
+        "function": bin_to_vbin_dw1,
+        "description": [
+            "Convert to the file which can be loaded by $readmemb to a common memory with 1-byte(8-bit) width",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
+            "The format will be:",
+            "  00000000",
+            "  00000001",
+            "  ......",
+        ],
+    },
+    "vbin_dw2": {
+        "function": bin_to_vbin_dw2,
+        "description": [
+            "Convert to the file which can be loaded by $readmemb to a common memory with 2-byte(16-bit) width",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
+            "The format will be:",
+            "  0000000100000000",
+            "  0000001100000010",
+            "  ......",
+        ],
+    },
+    "vbin_dw4": {
+        "function": bin_to_vbin_dw4,
+        "description": [
+            "Convert to the file which can be loaded by $readmemb to a common memory with 4-byte(32-bit) width",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
+            "The format will be:",
+            "  00000011000000100000000100000000",
+            "  00000111000001100000010100000100",
+            "  ......",
+        ],
+    },
+    "vbin_dw8": {
+        "function": bin_to_vbin_dw8,
+        "description": [
+            "Convert to the file which can be loaded by $readmemb to a common memory with 8-byte(64-bit) width",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
+            "The format will be:",
+            "  0000011100000110000001010000010000000011000000100000000100000000",
+            "  0000111100001110000011010000110000001011000010100000100100001000",
+            "  ......",
+        ],
+    },
+    "vbin_dw16": {
+        "function": bin_to_vbin_dw16,
+        "description": [
+            "Convert to the file which can be loaded by $readmemb to a common memory with 16-byte(128-bit) width",
+            "The option \"ecc\" is accepted as optional. Default is \"none\"",
+            "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
+            "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
+            "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
+            "The format will be:",
+            "  00001111000011100000110100001100000010110000101000001001000010000000011100000110000001010000010000000011000000100000000100000000",
+            "  00011111000111100001110100011100000110110001101000011001000110000001011100010110000101010001010000010011000100100001000100010000",
+            "  ......",
         ],
     },
 }

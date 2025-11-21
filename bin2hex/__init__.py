@@ -5,4 +5,4 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-__version__ = "2.3.0"
+__version__ = "2.4.0"

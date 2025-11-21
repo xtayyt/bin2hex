@@ -15,7 +15,7 @@ options:
   -v, --version         Show version information
   -i, --input INPUT     [Required] The raw binary input file to be converted
   -o, --output OUTPUT   [Required] The formatted hex output file to be converted to
-  -f, --format FORMAT   [Optional] The format to be converted to. Default is "verilog_dw1"
+  -f, --format FORMAT   [Optional] The format to be converted to. Default is "vhex_dw1"
   -a, --address ADDRESS
                         [Optional] The start address of the image. Not all formats require. Default is
                         0x0
@@ -85,7 +85,7 @@ options:
 ```
 
 ### Verilog HDL(VHEX)
-1. Verilog Data Width 1-Byte(--format vhex_dw1 or --format verilog_dw1):
+1. Verilog HEX, Data Width 1-Byte(--format vhex_dw1 or --format verilog_dw1):
 - Convert to the file which can be loaded by $readmemh to a common memory with 1-byte(8-bit) width
 - The option \"ecc\" is accepted as optional. Default is \"none\"
 - The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
@@ -99,7 +99,7 @@ options:
 ......
 ```
 
-2. Verilog Data Width 2-Byte(--format vhex_dw2 or --format verilog_dw2):
+2. Verilog HEX, Data Width 2-Byte(--format vhex_dw2 or --format verilog_dw2):
 - Convert to the file which can be loaded by $readmemh to a common memory with 2-byte(16-bit) width
 - The option \"ecc\" is accepted as optional. Default is \"none\"
 - The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
@@ -113,7 +113,7 @@ options:
 ......
 ```
 
-3. Verilog Data Width 4-Byte(--format vhex_dw4 or --format verilog_dw4):
+3. Verilog HEX, Data Width 4-Byte(--format vhex_dw4 or --format verilog_dw4):
 - Convert to the file which can be loaded by $readmemh to a common memory with 4-byte(32-bit) width
 - The option \"ecc\" is accepted as optional. Default is \"none\"
 - The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
@@ -127,7 +127,7 @@ options:
 ......
 ```
 
-4. Verilog Data Width 8-Byte(--format vhex_dw8 or --format verilog_dw8):
+4. Verilog HEX, Data Width 8-Byte(--format vhex_dw8 or --format verilog_dw8):
 - Convert to the file which can be loaded by $readmemh to a common memory with 8-byte(64-bit) width
 - The option \"ecc\" is accepted as optional. Default is \"none\"
 - The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
@@ -141,7 +141,7 @@ options:
 ......
 ```
 
-5. Verilog Data Width 16-Byte(--format vhex_dw16 or --format verilog_dw16):
+5. Verilog HEX, Data Width 16-Byte(--format vhex_dw16 or --format verilog_dw16):
 - Convert to the file which can be loaded by $readmemh to a common memory with 16-byte(128-bit) width
 - The option \"ecc\" is accepted as optional. Default is \"none\"
 - The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip
@@ -155,7 +155,7 @@ options:
 ......
 ```
 
-6. Verilog Data Width 1-Byte with Address(--format vhex_addr_dw1 or --format verilog_addr_dw1):
+6. Verilog HEX, Data Width 1-Byte with Address(--format vhex_addr_dw1 or --format verilog_addr_dw1):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 1-byte(8-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -166,7 +166,7 @@ options:
 ......
 ```
 
-7. Verilog Data Width 2-Byte with Address(--format vhex_addr_dw2 or --format verilog_addr_dw2):
+7. Verilog HEX, Data Width 2-Byte with Address(--format vhex_addr_dw2 or --format verilog_addr_dw2):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 2-byte(16-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -177,7 +177,7 @@ options:
 ......
 ```
 
-8. Verilog Data Width 4-Byte with Address(--format vhex_addr_dw4 or --format verilog_addr_dw4):
+8. Verilog HEX, Data Width 4-Byte with Address(--format vhex_addr_dw4 or --format verilog_addr_dw4):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 4-byte(32-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -188,7 +188,7 @@ options:
 ......
 ```
 
-9. Verilog Data Width 8-Byte with Address(--format vhex_addr_dw8 or --format verilog_addr_dw8):
+9. Verilog HEX, Data Width 8-Byte with Address(--format vhex_addr_dw8 or --format verilog_addr_dw8):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 8-byte(64-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -199,7 +199,7 @@ options:
 ......
 ```
 
-9. Verilog Data Width 16-Byte with Address(--format vhex_addr_dw16 or --format verilog_addr_dw16):
+9. Verilog HEX, Data Width 16-Byte with Address(--format vhex_addr_dw16 or --format verilog_addr_dw16):
 - Convert to the file which can be loaded by $readmemh to a specific offset of a common memory with 16-byte(128-bit) width
 - The option "address" is accepted as optional. Default is 0x0
 - The option "alignment" is accepted as optional. Default is 32 which means 32 bytes per line
@@ -209,17 +209,86 @@ options:
 @0x00000020 2F2E2D2C2B2A29282726252423222120 3F3E3D3C3B3A39383736353433323130
 ......
 ```
+10. Verilog BIN, Data Width 1-Byte(--format vbin_dw1):
+- Convert to the file which can be loaded by $readmemb to a common memory with 1-byte(8-bit) width
+- The option "ecc" is accepted as optional. Default is "none"
+- The option "ecc-skip-all-ones" is accepted as optional. Default is False which means no skip
+- The option "ecc-skip-all-zeros" is accepted as optional. Default is False which means no skip
+- The option "pad-count" is accepted as optional. Default is 0 which means no padding
+- The option "pad-byte" is accepted as optional. Default is "0xFF"
+- The format will be:
+```
+    00000000
+    00000001
+    ......
+```
+
+11. Verilog BIN, Data Width 2-Byte(--format vbin_dw2):
+- Convert to the file which can be loaded by $readmemb to a common memory with 2-byte(16-bit) width
+- The option "ecc" is accepted as optional. Default is "none"
+- The option "ecc-skip-all-ones" is accepted as optional. Default is False which means no skip
+- The option "ecc-skip-all-zeros" is accepted as optional. Default is False which means no skip
+- The option "pad-count" is accepted as optional. Default is 0 which means no padding
+- The option "pad-byte" is accepted as optional. Default is "0xFF"
+- The format will be:
+```
+    0000000100000000
+    0000001100000010
+    ......
+```
+
+12. Verilog BIN, Data Width 4-Byte(--format vbin_dw4):
+- Convert to the file which can be loaded by $readmemb to a common memory with 4-byte(32-bit) width
+- The option "ecc" is accepted as optional. Default is "none"
+- The option "ecc-skip-all-ones" is accepted as optional. Default is False which means no skip
+- The option "ecc-skip-all-zeros" is accepted as optional. Default is False which means no skip
+- The option "pad-count" is accepted as optional. Default is 0 which means no padding
+- The option "pad-byte" is accepted as optional. Default is "0xFF"
+- The format will be:
+```
+    00000011000000100000000100000000
+    00000111000001100000010100000100
+    ......
+```
+
+13. Verilog BIN, Data Width 8-Byte(--format vbin_dw8):
+- Convert to the file which can be loaded by $readmemb to a common memory with 8-byte(64-bit) width
+- The option "ecc" is accepted as optional. Default is "none"
+- The option "ecc-skip-all-ones" is accepted as optional. Default is False which means no skip
+- The option "ecc-skip-all-zeros" is accepted as optional. Default is False which means no skip
+- The option "pad-count" is accepted as optional. Default is 0 which means no padding
+- The option "pad-byte" is accepted as optional. Default is "0xFF"
+- The format will be:
+```
+    0000011100000110000001010000010000000011000000100000000100000000
+    0000111100001110000011010000110000001011000010100000100100001000
+    ......
+```
+
+14. Verilog BIN, Data Width 16-Byte(--format vbin_dw16):
+- Convert to the file which can be loaded by $readmemb to a common memory with 16-byte(128-bit) width
+- The option "ecc" is accepted as optional. Default is "none"
+- The option "ecc-skip-all-ones" is accepted as optional. Default is False which means no skip
+- The option "ecc-skip-all-zeros" is accepted as optional. Default is False which means no skip
+- The option "pad-count" is accepted as optional. Default is 0 which means no padding
+- The option "pad-byte" is accepted as optional. Default is "0xFF"
+- The format will be:
+```
+    00001111000011100000110100001100000010110000101000001001000010000000011100000110000001010000010000000011000000100000000100000000
+    00011111000111100001110100011100000110110001101000011001000110000001011100010110000101010001010000010011000100100001000100010000
+    ......
+```
 
 ## Supported ECC Algorithm
 1. None:
 - No ECC is added
 
-2. ARM SECDED:
+2. ARM SECDED(--ecc arm_secded):
 - Single Error Correction Double Error Detection (SECDED) code
 - The ECC bits are appended to the MSB side of the data
 - Only verilog_dwx (x = 4, 8, 16) formats support this ECC
 
-3. User specific algorithm
+3. User specific algorithm(--ecc <custom_ecc_func.py>)
 - Custom ECC function defined in the specified Python file
 - The Python file should define a function named ecc_encode
 ```
