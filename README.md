@@ -302,11 +302,12 @@ options:
 - Custom ECC function defined in the specified Python file
 - The Python file should define a function named ecc_encode
 ```
-def ecc_encode(data: bytes, data_width: int) -> bytes
+def ecc_encode(data: bytes, data_width: int, address: int) -> bytes
     # Add user specific algorithm here
     return data + ecc_bytes
 ```
 - data is the input data in bytes
 - data_width is the data width in bytes
+- address is the start address of the data block (required in some ECC algorithms)
 - The function should return the data with ECC bits appended to the MSB side in bytes
 - Only verilog_dwx (x = 1, 2, 4, 8, 16) formats support this ECC
