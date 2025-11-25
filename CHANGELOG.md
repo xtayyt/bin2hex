@@ -1,5 +1,14 @@
 # ChangeLog
 
+## V2.5.0 - 2025-11-25
+=======================
+### Improvement
+- Add argument 'address' for ECC generation
+  - Some Flash memories' ECC includes the address information
+- Turn some Warnings to Errors.
+  - Ease to be used by other scripts
+
+
 ## V2.4.0 - 2025-11-21
 =======================
 ### Feature

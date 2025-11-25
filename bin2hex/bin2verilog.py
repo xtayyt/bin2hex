@@ -4,8 +4,9 @@
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
+import inspect
 
-def bin_to_vhex_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF, swap_endian:int = False) -> str:
+def bin_to_vhex_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0, swap_endian:int = False) -> str:
     output_data = ""
     count = 0
 
@@ -23,7 +24,10 @@ def bin_to_vhex_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = 
                 if ecc_skip is not None:
                     if all(b == (ecc_skip & 0xFF) for b in data):
                         clean_ecc = True
-                data = ecc_encode(data, data_width)
+                if "start_address" in inspect.signature(ecc_encode).parameters:
+                    data = ecc_encode(data, data_width, start_address)
+                else:
+                    data = ecc_encode(data, data_width)
                 # We cannot skip ECC encoding, because the ECC bit count is unknown here
                 if clean_ecc:
                     data = bytes([ecc_skip] * len(data))
@@ -44,6 +48,7 @@ def bin_to_vhex_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = 
             # Append the hex string
             output_data += hex_str
             count += data_width
+            start_address += data_width
             # Break if no more data to handle
             if count >= len(input_data):
                 break
@@ -52,20 +57,20 @@ def bin_to_vhex_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = 
 
     return output_data
 
-def bin_to_vhex_dw1(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vhex_dwn(input_data, 1, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vhex_dw1(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vhex_dwn(input_data, 1, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vhex_dw2(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vhex_dwn(input_data, 2, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vhex_dw2(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vhex_dwn(input_data, 2, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vhex_dw4(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vhex_dwn(input_data, 4, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vhex_dw4(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vhex_dwn(input_data, 4, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vhex_dw8(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vhex_dwn(input_data, 8, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vhex_dw8(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vhex_dwn(input_data, 8, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vhex_dw16(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vhex_dwn(input_data, 16, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vhex_dw16(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vhex_dwn(input_data, 16, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
 def bin_to_vhex_addr_dwn(input_data:bytes , start_address:int = 0x0, align_width:int = 4, data_width:int = 1, swap_endian:bool = False) -> str:
     output_data = ""
@@ -128,28 +133,28 @@ def bin_to_vhex_addr_dw8(input_data:bytes, start_address:int = 0x0, align_width:
 def bin_to_vhex_addr_dw16(input_data:bytes, start_address:int = 0x0, align_width:int = 32) -> str:
     return bin_to_vhex_addr_dwn(input_data, start_address, align_width, 16, False)
 
-def bin_to_vbin_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF, swap_endian:int = False) -> str:
-    data = bin_to_vhex_dwn(input_data, data_width, ecc_encode, ecc_skip, pad_count, pad_byte, swap_endian)
+def bin_to_vbin_dwn(input_data:bytes, data_width:int = 1, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF, start_address:int = 0x0, swap_endian:int = False) -> str:
+    data = bin_to_vhex_dwn(input_data, data_width, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, swap_endian)
     data_lines = data.splitlines()
     data_bin = ""
     for data_line in data_lines:
         data_bin += bin(int(data_line,16))[2:].zfill(len(data_line)*4) + '\n'
     return data_bin.rstrip('\n')
 
-def bin_to_vbin_dw1(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vbin_dwn(input_data, 1, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vbin_dw1(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vbin_dwn(input_data, 1, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vbin_dw2(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vbin_dwn(input_data, 2, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vbin_dw2(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vbin_dwn(input_data, 2, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vbin_dw4(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vbin_dwn(input_data, 4, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vbin_dw4(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vbin_dwn(input_data, 4, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vbin_dw8(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vbin_dwn(input_data, 8, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vbin_dw8(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vbin_dwn(input_data, 8, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
-def bin_to_vbin_dw16(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte: int = 0xFF) -> str:
-    return bin_to_vbin_dwn(input_data, 16, ecc_encode, ecc_skip, pad_count, pad_byte, False)
+def bin_to_vbin_dw16(input_data:bytes, ecc_encode:callable = None, ecc_skip:int = None, pad_count:int = 0, pad_byte:int = 0xFF, start_address:int = 0x0) -> str:
+    return bin_to_vbin_dwn(input_data, 16, ecc_encode, ecc_skip, pad_count, pad_byte, start_address, False)
 
 bin2verilog_dict = {
     "vhex_dw1": {
@@ -159,6 +164,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -174,6 +180,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -189,6 +196,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -204,6 +212,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -219,6 +228,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -354,6 +364,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -369,6 +380,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -384,6 +396,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -399,6 +412,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",
@@ -414,6 +428,7 @@ bin2verilog_dict = {
             "The option \"ecc\" is accepted as optional. Default is \"none\"",
             "The option \"ecc-skip-all-ones\" is accepted as optional. Default is False which means no skip",
             "The option \"ecc-skip-all-zeros\" is accepted as optional. Default is False which means no skip",
+            "The option \"address\" is accepted as optional for ECC calculation. Default is 0x0",
             "The option \"pad-count\" is accepted as optional. Default is 0 which means no padding",
             "The option \"pad-byte\" is accepted as optional. Default is \"0xFF\"",
             "The format will be:",

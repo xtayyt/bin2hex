@@ -14,6 +14,7 @@ import inspect
 import importlib.util
 
 from typing import Optional, BinaryIO
+
 from bin2hex import __version__
 from bin2hex.bin2c import bin2c_dict
 # from bin2hex.bin2ihex import bin2ihex_dict
@@ -21,6 +22,7 @@ from bin2hex.bin2model import bin2model_dict
 # from bin2hex.bin2srec import bin2srec_dict
 from bin2hex.bin2verilog import bin2verilog_dict
 from bin2hex.ecc import ecc_dict
+from bin2hex.error import *
 
 format_dict = {
     **bin2c_dict,
@@ -99,7 +101,7 @@ def main() -> bool:
     parse.add_argument('--ecc-skip-all-zeros', action='store_true', help = ecc_skip_all_zeros_help)
     parse.add_argument('-c', '--pad-count', type = lambda x:int(x, 0), default = None, help = pad_count_help)
     parse.add_argument('-b', '--pad-byte', type = lambda x:int(x, 0), default = None, help = pad_byte_help)
-    parse.add_argument('-s', '--split', type = lambda x:int(x, 0), default = None, help = split_help)
+    parse.add_argument('-s', '--split', type = lambda x:int(x, 0), default = 1, help = split_help)
     #parse.add_argument('-E', '--entry', type = lambda x:int(x, 0), default = None, help=entry_help)
     args = parse.parse_args()
 
@@ -118,55 +120,51 @@ def main() -> bool:
 
     if len(sys.argv) == 1:
         parse.print_usage()
-        return True
+        return SUCCESS
 
-    if split_count is not None:
-        if split_count <= 0 or (split_count & (split_count - 1)) != 0:
-            print(f"Warning: The split count {split_count} is not valid. It must be a power of 2 (1, 2, 4, 8, ...). The option will be ignored.")
-            split_count = 1
-    else:
-        split_count = 1
+    kwargs = {}
 
     ifile = safe_open(input_file, 'rb')
     if ifile is None:
-        return False
+        return INVALID_INPUT_FILE
 
-    ofiles = []
-    if split_count == 1:
-        ofiles.append(safe_open(output_file, 'w'))
-    else:
-        for i in range(split_count):
-            name, extension = output_file.rsplit('.', 1)
-            ofiles.append(safe_open(f"{name}_{i}.{extension}", 'w'))
+    if output_file is None:
+        print(f"Error: No output file specified.")
+        return INVALID_INPUT_FILE
 
     # Check the format is supported
     if convert_format not in format_dict:
         print(f"Error: The format {convert_format} is not supported.")
-        return False
-
-    if ecc_skip_all_ones is True and ecc_skip_all_zeros is True:
-        print(f"Error: Both ecc-skip-all-ones and ecc-skip-all-zeros are enabled. Only one of them can be enabled at a time.")
-        return False
-
+        return INVALID_FORMAT
     # Prepare the conversion function and arguments
     convert_function = format_dict[convert_format]["function"]
-    kwargs = {}
+
     if start_address is not None:
         if "start_address" in inspect.signature(convert_function).parameters:
             kwargs["start_address"] = start_address
         else:
-            print(f"Warning: The format {convert_format} does not support \"address\" option, which will be ignored.")
+            print(f"Error: The format {convert_format} does not support \"address\" option.")
+            return INVALID_OPTION
+
     if align_width is not None:
         if "align_width" in inspect.signature(convert_function).parameters:
             kwargs["align_width"] = align_width
         else:
-            print(f"Warning: The format {convert_format} does not support \"alignment\" option, which will be ignored.")
+            print(f"Error: The format {convert_format} does not support \"alignment\" option.")
+            return INVALID_OPTION
+
+    if ecc_skip_all_ones is True and ecc_skip_all_zeros is True:
+        print(f"Error: Both ecc-skip-all-ones and ecc-skip-all-zeros are enabled. Only one of them can be enabled at a time.")
+        return INVALID_OPTION
+
     if ecc is not None:
         if "ecc_encode" in inspect.signature(convert_function).parameters:
             if ecc_skip_all_ones is True:
                 kwargs["ecc_skip"] = 0xFF
-            if ecc_skip_all_zeros is True:
+            elif ecc_skip_all_zeros is True:
                 kwargs["ecc_skip"] = 0x00
+            else:
+                kwargs["ecc_skip"] = None
             if ecc in ecc_dict:
                 kwargs["ecc_encode"] = ecc_dict[ecc]["function"]
             else:
@@ -177,32 +175,55 @@ def main() -> bool:
                     if hasattr(ecc_module, 'ecc_encode'):
                         kwargs["ecc_encode"] = getattr(ecc_module, 'ecc_encode')
                     else:
-                        print(f"Warning: Doesn't find ecc_encode function in {ecc}. Using default \"none\".")
-                        kwargs["ecc_encode"] = None
+                        print(f"Error: Doesn't find ecc_encode function in {ecc}.")
+                        return INVALID_OPTION
                 else:
-                    print(f"Warning: The ECC type {ecc} is not supported. Using default \"none\".")
-                    kwargs["ecc_encode"] = None
+                    print(f"Error: The ECC type {ecc} is not supported.")
+                    return INVALID_OPTION
+
+            if "start_address" in inspect.signature(kwargs["ecc_encode"]).parameters:
+                if start_address is None:
+                    print(f"Warning: The ECC function in {ecc} requires start address parameter, but no start address is specified. Using default 0x0.")
+            else:
+                if start_address is not None:
+                    print(f"Error: The ECC function in {ecc} doesn't support start address parameter.")
+                    return INVALID_OPTION
         else:
-            print(f"Warning: The format {convert_format} does not support \"ecc\" option, which will be ignored.")
-            if ecc_skip_all_ones is True:
-                print(f"Warning: The format {convert_format} does not support \"ecc\" option, so the \"ecc-skip-all-ones\" option will be ignored.")
-            if ecc_skip_all_zeros is True:
-                print(f"Warning: The format {convert_format} does not support \"ecc\" option, so the \"ecc-skip-all-zeros\" option will be ignored.")
+            print(f"Error: The format {convert_format} does not support \"ecc\" option.")
+            return INVALID_OPTION
+
+    if ecc_skip_all_ones is True or ecc_skip_all_zeros is True:
+        if ecc is None:
+            print(f"Error: ecc-skip-all-ones or ecc-skip-all-zeros is enabled, but no ECC type is specified.")
+            return INVALID_OPTION
+
     if pad_count is not None:
         if "pad_count" in inspect.signature(convert_function).parameters:
+            if pad_count < 0:
+                print(f"Error: The pad count {pad_count} is invalid.")
+                return INVALID_OPTION
             kwargs["pad_count"] = pad_count
         else:
-            print(f"Warning: The format {convert_format} does not support \"padcount\" option, which will be ignored.")
+            print(f"Error: The format {convert_format} does not support \"padcount\" option.")
+            return INVALID_OPTION
+
     if pad_byte is not None:
         if pad_count is not None:
             if "pad_byte" in inspect.signature(convert_function).parameters:
                 if pad_byte < 0 or pad_byte > 255:
-                    print(f"Warning: The pad byte {pad_byte} is out of range (0-255). Pad byte will be masked to 0-255.")
+                    print(f"Error: The pad byte {pad_byte} is out of range (0-255).")
+                    return INVALID_OPTION
                 kwargs["pad_byte"] = pad_byte & 0xFF
             else:
-                print(f"Warning: The format {convert_format} does not support \"padbyte\" option, which will be ignored.")
+                print(f"Error: The format {convert_format} does not support \"padbyte\" option.")
+                return INVALID_OPTION
         else:
-            print(f"Warning: The pad byte is specified but pad count is not specified. The pad byte option will be ignored.")
+            print(f"Error: The pad byte is specified but pad count is not.")
+            return INVALID_OPTION
+
+    if split_count <= 0 or (split_count & (split_count - 1)) != 0:
+        print(f"Error: The split count {split_count} is not valid. It must be a power of 2 (1, 2, 4, 8, ...).")
+        return INVALID_OPTION
 
     #if start_entry is not None:
     #    if "start_entry" in inspect.signature(convert_function).parameters:
@@ -216,15 +237,31 @@ def main() -> bool:
     # Perform the conversion
     output_data = convert_function(input_data, **kwargs)
 
-
     # Write the hex string to the output file
-    output_data_lines = output_data.splitlines(keepends=True)
-    i = 0
-    for output_data_line in output_data_lines:
-        ofiles[i % split_count].write(output_data_line)
-        i = i + 1
+    if split_count == 1:
+        ofile = safe_open(output_file, 'w')
+        if ofile is None:
+            return FAIL_WRITE_OUTPUT_FILE
+        ofile.write(output_data)
+        ofile.close()
+    else:
+        output_data_lines = output_data.splitlines(keepends=True)
+        ofile_data_lines = [[] for _ in range(split_count)]
+        i = 0
+        for output_data_line in output_data_lines:
+            ofile_data_lines[i % split_count].append(output_data_line)
+            i = i + 1
+        name, extension = output_file.rsplit('.', 1)
+        for i in range(split_count):
+            # Remove the trailing newline for each split file
+            ofile_data_lines[i][-1] = ofile_data_lines[i][-1].rstrip('\n')
+            ofile = safe_open(f"{name}_{i}.{extension}", 'w')
+            if ofile is None:
+                return FAIL_WRITE_OUTPUT_FILE
+            for ofile_data_line in ofile_data_lines[i]:
+                ofile.write(ofile_data_line)
 
-    return
+    return SUCCESS
 
 if __name__ == '__main__':
     raise SystemExit(main())
